@@ -1,0 +1,45 @@
+{
+    "name": "CapsuleController",
+    "maps": [
+        {
+            "name": "IPRevision",
+            "id": "dd5f2934-58d4-4ada-b226-29dddcc5fce4",
+            "actions": [
+                {
+                    "name": "Revision",
+                    "type": "Button",
+                    "id": "8463b435-6906-464d-be1b-71c173c54e9b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8ad124c7-9060-4cfd-a41c-58b79c169a8e",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Revision",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2901d19-4824-43b9-bc7c-0d205e2d9f86",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Revision",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
