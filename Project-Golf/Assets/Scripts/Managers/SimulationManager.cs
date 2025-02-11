@@ -11,6 +11,7 @@ public class SimulationManager : MonoBehaviour
     [Header("Simulation Settings")]
     [SerializeField] private float gravity = 0.0001f;
     [SerializeField] private float physicsTimeStep = 0.01f;
+    public static float Gravity = 0.1f;
     
     [Header("Simulation Objects")]
     [SerializeField] private Asteroid activeAsteroid = null;
