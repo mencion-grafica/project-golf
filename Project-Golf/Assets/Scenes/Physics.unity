@@ -276,6 +276,7 @@ MonoBehaviour:
   physicsTimeStep: 0.01
   activeAsteroid: {fileID: 966447788}
   planets:
+  - {fileID: 1672386938}
   - {fileID: 1903969830}
   isSimulationRunning: 1
 --- !u!1 &733671698
@@ -323,7 +324,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966447782}
   serializedVersion: 4
-  m_Mass: 2110
+  m_Mass: 1180
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -341,7 +342,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &966447788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,11 +355,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35edeae9764864419a1742483435695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: -5, y: 0, z: 0}
-  mass: 100
+  initialVelocity: {x: -8, y: 0, z: 0}
+  mass: 1180
   radius: 1
-  surfaceGravity: 211
+  surfaceGravity: 118
   canMove: 0
+  numSteps: 1000
 --- !u!120 &966447789
 LineRenderer:
   serializedVersion: 2
@@ -402,8 +404,7 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 2.72}
+  - {x: -10, y: 5, z: -15}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -460,7 +461,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!1 &1414913423
@@ -481,7 +482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1414913424
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -846,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &1672386934
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -944,7 +945,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1672386938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,7 +968,7 @@ Transform:
   m_GameObject: {fileID: 1672386933}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.84, y: 5, z: 6.98}
+  m_LocalPosition: {x: 30.99, y: 5, z: 25.45}
   m_LocalScale: {x: 6.010757, y: 6.010757, z: 6.010757}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1051,7 +1052,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!135 &1903969826
 SphereCollider:
   m_ObjectHideFlags: 0
