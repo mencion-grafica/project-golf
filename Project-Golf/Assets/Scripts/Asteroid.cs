@@ -70,6 +70,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.CompareTag("WormHole")) return;
         SimulationManager.Instance.StopSimulation();
     }
 
