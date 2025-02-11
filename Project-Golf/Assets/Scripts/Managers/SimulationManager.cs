@@ -36,8 +36,18 @@ public class SimulationManager : MonoBehaviour
         else Destroy(gameObject);
         
         Time.fixedDeltaTime = physicsTimeStep;
-        Debug.Log("Simulation Manager initialized...");
-        Debug.Log("Physics time step: " + physicsTimeStep);
+    }
+    
+    public void StartSimulation()
+    {
+        activeAsteroid?.StartSimulation();
+        isSimulationRunning = true;
+    }
+    
+    public void StopSimulation()
+    {
+        activeAsteroid?.StopSimulation();
+        isSimulationRunning = false;
     }
 
     private void FixedUpdate()
