@@ -272,11 +272,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679fe00e77c91cc4a9d4f70d55742253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 0.01
+  gravity: 0.1
   physicsTimeStep: 0.01
+  activeAsteroid: {fileID: 966447788}
   planets:
-  - {fileID: 1672386938}
   - {fileID: 1903969830}
+  isSimulationRunning: 1
 --- !u!1 &733671698
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +323,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966447782}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2110
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -353,8 +354,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35edeae9764864419a1742483435695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: -10, y: 0, z: 0}
-  mass: 1
+  initialVelocity: {x: -5, y: 0, z: 0}
+  mass: 100
+  radius: 1
+  surfaceGravity: 211
   canMove: 0
 --- !u!120 &966447789
 LineRenderer:
@@ -843,7 +846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &1672386934
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -923,7 +926,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672386933}
   serializedVersion: 4
-  m_Mass: 5000
+  m_Mass: 10000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -954,7 +957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b16900cb735b54eb7f2ba7a06af8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 5000
+  mass: 10000
 --- !u!4 &1672386939
 Transform:
   m_ObjectHideFlags: 0
@@ -1030,7 +1033,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903969824}
   serializedVersion: 4
-  m_Mass: 3000
+  m_Mass: 6000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1147,7 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b16900cb735b54eb7f2ba7a06af8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 3000
+  mass: 6000
 --- !u!1001 &975018996436872087
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1163,8 +1166,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
         type: 3}
@@ -1174,7 +1192,7 @@ PrefabInstance:
     - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
         type: 3}

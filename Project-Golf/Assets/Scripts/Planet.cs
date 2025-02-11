@@ -22,8 +22,8 @@ public class Planet : MonoBehaviour
         return mass;
     }
     
-    public Transform GetCenter()
+    public Vector3 GetPosition()
     {
-        return _center;
+        return _rigidbody.position;
     }
 }
