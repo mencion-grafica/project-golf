@@ -8,10 +8,16 @@ public class SimulationManager : MonoBehaviour
 {
     public static SimulationManager Instance { get; private set; }
 
+    [Header("Simulation Settings")]
     [SerializeField] private float gravity = 0.0001f;
     [SerializeField] private float physicsTimeStep = 0.01f;
     
+    [Header("Simulation Objects")]
+    [SerializeField] private Asteroid activeAsteroid = null;
     [SerializeField] private List<Planet> planets = new List<Planet>();
+    
+    [Header("Simulation State")]
+    [SerializeField] private bool isSimulationRunning = false;
     
     [ContextMenu("Get All Planets")]
     private void GetAllPlanets()
@@ -28,6 +34,17 @@ public class SimulationManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
+        Time.fixedDeltaTime = physicsTimeStep;
+        Debug.Log("Simulation Manager initialized...");
+        Debug.Log("Physics time step: " + physicsTimeStep);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isSimulationRunning) return;
+        
+        activeAsteroid?.UpdateVelocity(physicsTimeStep);
     }
 
     public List<Planet> GetPlanets()
