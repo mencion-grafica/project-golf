@@ -80,7 +80,7 @@ public class Asteroid : MonoBehaviour
     
     public Vector3 GetVelocity()
     {
-        return _velocity;
+        return initialVelocity;
     }
     
     public float GetMass()
