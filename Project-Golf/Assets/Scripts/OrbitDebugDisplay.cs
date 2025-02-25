@@ -30,22 +30,38 @@ public class OrbitDebugDisplay : MonoBehaviour
         public Vector3 position;
         public Vector3 velocity;
         public float mass;
+        public float radious;
 
         public VirtualBody(Asteroid asteroid)
         {
             position = asteroid.GetPosition();
             velocity = asteroid.GetVelocity();
             mass = asteroid.GetMass();
+            radious = asteroid.GetRadious();
         }
     }
-    
+
+    private bool CheckCollisions(List<Planet> planets, VirtualBody virtualBody)
+    {
+        foreach (Planet planet in planets) if (CheckCollision(planet, virtualBody)) return true;
+        return false;
+    }
+
+    private bool CheckCollision(Planet planet, VirtualBody virtualBody)
+    {
+        float sqrDistance = (planet.GetPosition() - virtualBody.position).sqrMagnitude;
+        float sqrRadious = planet.GetRadious() + virtualBody.radious;
+        return sqrDistance < sqrRadious * sqrRadious;
+    }
+
     private void DrawOrbits()
     {
         List<Planet> planets = new List<Planet>(FindObjectsOfType<Planet>());
         List<Vector3> drawPoints = new List<Vector3>();
         VirtualBody virtualBody = new VirtualBody(asteroid);
+        bool collision = false;
         
-        for (int i = 0; i < numSteps; i++)
+        for (int i = 0; i < numSteps && !collision; i++)
         {
             foreach (Planet planet in planets)
             {
@@ -56,11 +72,14 @@ public class OrbitDebugDisplay : MonoBehaviour
             }
             virtualBody.position += virtualBody.velocity * timeStep;
             drawPoints.Add(virtualBody.position);
+            if (CheckCollisions(planets, virtualBody)) collision = true;
         }
         
         LineRenderer lineRenderer = asteroid.GetComponent<LineRenderer>();
         lineRenderer.positionCount = drawPoints.Count;
         lineRenderer.SetPositions(drawPoints.ToArray());
+        lineRenderer.startColor = collision ? Color.red : Color.green;
+        lineRenderer.endColor = collision ? Color.red : Color.green;
     }
     
     private void HideOrbits()

@@ -55,7 +55,7 @@ public class Asteroid : MonoBehaviour
     {
         _rigidbody.MovePosition(_rigidbody.position + _velocity * timeStep);
         _lineRenderer.positionCount++;
-        _lineRenderer.SetPosition(_index++, _rigidbody.position);
+        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _rigidbody.position);
     }
 
     public void StartSimulation()
@@ -71,6 +71,11 @@ public class Asteroid : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         SimulationManager.Instance.StopSimulation();
+    }
+    
+    public float GetRadious()
+    {
+        return radius;
     }
 
     public Vector3 GetPosition()

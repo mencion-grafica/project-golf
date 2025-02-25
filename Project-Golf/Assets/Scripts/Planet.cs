@@ -17,6 +17,11 @@ public class Planet : MonoBehaviour
         _rigidbody.mass = mass;
     }
     
+    public float GetRadious()
+    {
+        return transform.localScale.x / 2;
+    }
+    
     public float GetMass()
     {
         return mass;

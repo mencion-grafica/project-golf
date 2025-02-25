@@ -15,7 +15,7 @@ public class SimulationManager : MonoBehaviour
     
     [Header("Simulation Objects")]
     [SerializeField] private Asteroid activeAsteroid = null;
-    [SerializeField] private List<Planet> planets = new List<Planet>();
+    private List<Planet> _planets = new List<Planet>();
     
     [Header("Simulation State")]
     [SerializeField] private bool isSimulationRunning = false;
@@ -23,7 +23,7 @@ public class SimulationManager : MonoBehaviour
     [ContextMenu("Get All Planets")]
     private void GetAllPlanets()
     {
-        planets = new List<Planet>(FindObjectsOfType<Planet>());
+        _planets = new List<Planet>(FindObjectsOfType<Planet>());
     }
     
     public float GetGravitationalConstant()
@@ -35,10 +35,14 @@ public class SimulationManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
-        Time.fixedDeltaTime = physicsTimeStep;
     }
-    
+
+    private void Start()
+    {
+        Time.fixedDeltaTime = physicsTimeStep;
+        _planets = new List<Planet>(FindObjectsOfType<Planet>());
+    }
+
     public void StartSimulation()
     {
         activeAsteroid?.StartSimulation();
@@ -60,6 +64,6 @@ public class SimulationManager : MonoBehaviour
 
     public List<Planet> GetPlanets()
     {
-        return planets;
+        return _planets;
     }
 }
