@@ -26,6 +26,11 @@ public class Planet : MonoBehaviour
     {
         return mass;
     }
+
+    public void SetMass(float mass)
+    {
+        this.mass = mass;
+    }
     
     public Vector3 GetPosition()
     {
