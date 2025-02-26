@@ -12,9 +12,9 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] private float gravity = 0.0001f;
     [SerializeField] private float physicsTimeStep = 0.01f;
     public static float Gravity = 0.1f;
-    
+
     [Header("Simulation Objects")]
-    [SerializeField] private Asteroid activeAsteroid = null;
+    private List<CelestialBody> _celestialBodies = new List<CelestialBody>();
     private List<Planet> _planets = new List<Planet>();
     
     [Header("Simulation State")]
@@ -24,6 +24,7 @@ public class SimulationManager : MonoBehaviour
     private void GetAllPlanets()
     {
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
+        _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
     }
     
     public float GetGravitationalConstant()
@@ -40,26 +41,27 @@ public class SimulationManager : MonoBehaviour
     private void Start()
     {
         Time.fixedDeltaTime = physicsTimeStep;
-        _planets = new List<Planet>(FindObjectsOfType<Planet>());
+        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
+        GetAllPlanets();
+        StartSimulation();
     }
-
+    
     public void StartSimulation()
     {
-        activeAsteroid?.StartSimulation();
         isSimulationRunning = true;
+        foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
     }
     
     public void StopSimulation()
     {
-        activeAsteroid?.StopSimulation();
         isSimulationRunning = false;
+        foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
     }
 
     private void FixedUpdate()
     {
         if (!isSimulationRunning) return;
-        
-        activeAsteroid?.UpdateVelocity(physicsTimeStep);
+        foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.UpdateVelocity(physicsTimeStep);
     }
 
     public List<Planet> GetPlanets()

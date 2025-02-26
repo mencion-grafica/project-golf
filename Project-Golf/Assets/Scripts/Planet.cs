@@ -17,9 +17,9 @@ public class Planet : MonoBehaviour
         _rigidbody.mass = mass;
     }
     
-    public float GetRadious()
+    public float GetRadius()
     {
-        return transform.localScale.x / 2;
+        return transform.localScale.x * 0.5f;
     }
     
     public float GetMass()
@@ -29,6 +29,7 @@ public class Planet : MonoBehaviour
     
     public Vector3 GetPosition()
     {
+        if (!_rigidbody) _rigidbody = GetComponent<Rigidbody>();
         return _rigidbody.position;
     }
 }
