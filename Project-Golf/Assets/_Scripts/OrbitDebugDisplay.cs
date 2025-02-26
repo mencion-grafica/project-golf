@@ -41,16 +41,31 @@ public class OrbitDebugDisplay : MonoBehaviour
     
     private void DrawOrbits()
     {
-        List<Planet> planets = SimulationManager.Instance.GetPlanets();
+        List<Planet> planets = new List<Planet>(FindObjectsOfType<Planet>());
         List<Vector3> drawPoints = new List<Vector3>();
-        int referenceFrameIndex = 0;
-        Vector3 referenceBodyInitialPosition = Vector3.zero;
-
+        VirtualBody virtualBody = new VirtualBody(asteroid);
         
+        for (int i = 0; i < numSteps; i++)
+        {
+            foreach (Planet planet in planets)
+            {
+                float sqrDistance = (planet.GetPosition() - virtualBody.position).sqrMagnitude;
+                Vector3 forceDirection = (planet.GetPosition() - virtualBody.position).normalized;
+                Vector3 acceleration = forceDirection * (SimulationManager.Gravity * planet.GetMass()) / sqrDistance;
+                virtualBody.velocity += acceleration * timeStep;
+            }
+            virtualBody.position += virtualBody.velocity * timeStep;
+            drawPoints.Add(virtualBody.position);
+        }
+        
+        LineRenderer lineRenderer = asteroid.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = drawPoints.Count;
+        lineRenderer.SetPositions(drawPoints.ToArray());
     }
     
     private void HideOrbits()
     {
-        throw new NotImplementedException();
+        LineRenderer lineRenderer = asteroid.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 0;
     }
 }
