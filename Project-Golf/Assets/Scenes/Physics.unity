@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialVelocity: {x: 7.695587, y: 0, z: -3.7587981}
-  mass: 1180
+  mass: 100
   radius: 1
   surfaceGravity: 118
   planet: {fileID: 1903969830}
