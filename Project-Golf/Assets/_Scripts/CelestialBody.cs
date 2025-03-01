@@ -23,7 +23,7 @@ public class CelestialBody : MonoBehaviour
         _lineRenderer.positionCount = 1;
         _lineRenderer.SetPosition(0, _rigidbody.position);
         mass = surfaceGravity * radius * radius / SimulationManager.Instance.GetGravitationalConstant();
-        transform.localScale = Vector3.one * radius;
+        //transform.localScale = Vector3.one * radius;
         _rigidbody.mass = mass;
         _velocity = initialVelocity;
         _planets = SimulationManager.Instance.GetPlanets();
