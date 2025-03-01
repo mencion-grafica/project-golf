@@ -71,7 +71,17 @@ public class CelestialBody : MonoBehaviour
     {
         return initialVelocity;
     }
-    
+
+    public Vector3 GetCurrentVelocity()
+    {
+        return _velocity;
+    }
+
+    public void SetCurrentVelocity(Vector3 newVelocity)
+    {
+        _velocity = newVelocity;
+    }
+
     public float GetMass()
     {
         return mass;
