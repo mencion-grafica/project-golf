@@ -5,6 +5,9 @@ public class WormHole : Planet
 {
     [SerializeField] private WormHole planet; // Wormhole destino
     [SerializeField] private int teleportOffset = 10; // Distancia extra en la dirección del movimiento
+    private Vector3 asteroidPosition;
+    private Vector3 wormPosition;
+    private Vector3 wormPosition2;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -21,6 +24,10 @@ public class WormHole : Planet
                 other.transform.position = teleportPosition; // Teletransportar con desplazamiento
                 rb.velocity = rb.velocity; // Mantener la velocidad original
             }
+            asteroidPosition = other.transform.position;
+            wormPosition = this.transform.position;
+
+
         }
     }
 }
