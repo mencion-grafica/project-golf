@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 7698944417864140613}
   - component: {fileID: 2054215612612252934}
   - component: {fileID: 3080318859547234748}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: PlanetPrototype
   m_TagString: Untagged
   m_Icon: {fileID: 0}
