@@ -6,10 +6,11 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     [SerializeField]
-    private Asteroid asteroid; 
+    private GameObject asteroid; 
 
     public void shoot()
     {
         Instantiate(asteroid, this.transform.position, Quaternion.identity);
+        SimulationManager.Instance.StartSimulation();
     }
 }
