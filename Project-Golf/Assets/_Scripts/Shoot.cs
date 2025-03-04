@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     [SerializeField]
-    private Asteroid asteroid; 
+    private Asteroid asteroid;
 
     public void shoot()
     {

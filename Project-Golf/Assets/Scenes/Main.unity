@@ -2371,6 +2371,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlackHole
       objectReference: {fileID: 0}
+    - target: {fileID: 4639986104843415169, guid: 324a00a3907a9a3489a2e39ca48fe79e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7310245237411366416, guid: 324a00a3907a9a3489a2e39ca48fe79e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8009,7 +8014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialVelocity: {x: 12.15462, y: -0, z: 0}
-  mass: 100
+  mass: 1180
   radius: 1
   surfaceGravity: 118
   planet: {fileID: 1585540801}
