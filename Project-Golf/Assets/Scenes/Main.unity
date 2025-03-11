@@ -8014,7 +8014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialVelocity: {x: 12.15462, y: -0, z: 0}
-  mass: 100
+  mass: 1180
   radius: 1
   surfaceGravity: 118
   planet: {fileID: 1585540801}
@@ -9844,8 +9844,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
+      propertyPath: m_SnapToColliderVolume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
@@ -9854,8 +9879,38 @@ PrefabInstance:
       objectReference: {fileID: 1585540800}
     - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1585540801}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1585540801}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Rescale
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: IsDynamicAttach
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IsDynamicAttach
       objectReference: {fileID: 0}
     - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
@@ -9864,7 +9919,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Planet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Planet, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7405450269956834667, guid: a9de52b38a8ff144691ae6b0a9b844c0,
@@ -9950,7 +10030,9 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7977724726422162511, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
     - {fileID: 812516510132011830, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
-    m_RemovedGameObjects: []
+    - {fileID: 618313525490215928, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 1878684025514136382, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8476477872522708736, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}

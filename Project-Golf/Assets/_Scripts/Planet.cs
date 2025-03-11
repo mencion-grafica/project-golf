@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 [ExecuteInEditMode]
 public class Planet : MonoBehaviour
@@ -9,12 +10,27 @@ public class Planet : MonoBehaviour
     [SerializeField, Range(0.0f, 10000.0f)] private float mass = 1.0f;
     private Transform _center;
     private Rigidbody _rigidbody;
+    private XRGrabInteractable _grabInteractable;
     
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _center = transform;
         _rigidbody.mass = mass;
+        _grabInteractable = GetComponent<XRGrabInteractable>();
+        _grabInteractable.useDynamicAttach = false;
+    }
+
+    public void IsDynamicAttach(bool dynamicAttach)
+    {
+        if (dynamicAttach)
+        {
+            _grabInteractable.useDynamicAttach = true;
+        }
+        else
+        {
+            _grabInteractable.useDynamicAttach = false;
+        }
     }
     
     public float GetRadius()
