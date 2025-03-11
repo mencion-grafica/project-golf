@@ -15,7 +15,7 @@ public class LevelEditorWindow : EditorWindow
     private string _levelName = "Level 1";
     private float _bigSpace = 15.0f;
     private float _smallSpace = 5.0f;
-    private string _savingAssetPath = "Assets/_Scripts/ScriptableObjectsData/";
+    private const string SavingAssetPath = "Assets/_Scripts/ScriptableObjectsData/";
     
     [MenuItem("Level Editor/Show Window")]
     public static void ShowWindow()
@@ -61,6 +61,33 @@ public class LevelEditorWindow : EditorWindow
         ProgressBar(GetPlanets, "Creating Level", "Getting all obstacles, planets and points...", 5.0f);
         Notify("Level created!", 1.0f);
     }
+
+    private void CreateSOLevelData()
+    {
+        try
+        {
+            SOLevelData levelData = CreateInstance<SOLevelData>();
+            levelData.planets = new List<SOLevelData.PlanetData>();
+            foreach (Planet planet in _planets)
+            {
+                levelData.planets.Add(new SOLevelData.PlanetData
+                {
+                    name = planet.name,
+                    position = planet.transform.position,
+                    mass = planet.GetMass(),
+                    prefab = planet.gameObject
+                });
+            }
+            AssetDatabase.CreateAsset(levelData, SavingAssetPath + _levelName + ".asset");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+        catch (Exception e)
+        {
+            Notify(e.Message, 2.0f);
+            Debug.LogError(e, this);
+        }
+    }
     
     private void SaveLevel()
     {
@@ -80,27 +107,9 @@ public class LevelEditorWindow : EditorWindow
             return;
         }
         
-        Debug.Log("Saving level " + _levelName + "...");
-        ProgressBar(() => { }, "Saving " + _levelName, "Saving all obstacles, planets and points...", 5.0f);
+        ProgressBar(CreateSOLevelData, "Saving " + _levelName, "Saving all obstacles, planets and points...", 5.0f);
+        
         Notify("Level saved!", 1.0f);
-        
-        // TODO: Do try catch to notify if the asset was not saved correctly
-        SOLevelData levelData = CreateInstance<SOLevelData>();
-        levelData.planets = new List<SOLevelData.PlanetData>();
-        foreach (Planet planet in _planets)
-        {
-            levelData.planets.Add(new SOLevelData.PlanetData
-            {
-                name = planet.name,
-                position = planet.transform.position,
-                mass = planet.GetMass(),
-                prefab = planet.gameObject
-            });
-        }
-        AssetDatabase.CreateAsset(levelData, _savingAssetPath + _levelName + ".asset");
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        
         _levelCreated = false;
     }
 
