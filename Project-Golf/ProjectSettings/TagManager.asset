@@ -7,6 +7,11 @@ TagManager:
   - Destroyable
   - Left
   - Right
+  - PlanetPoint
+  - Obstacle
+  - Planet
+  - Asteroid
+  - AsteroidSpawner
   layers:
   - Default
   - TransparentFX
