@@ -11,6 +11,7 @@ public class Planet : MonoBehaviour
     private Transform _center;
     private Rigidbody _rigidbody;
     private XRGrabInteractable _grabInteractable;
+    private Collider collider;
     
     private void Start()
     {
@@ -18,14 +19,22 @@ public class Planet : MonoBehaviour
         _center = transform;
         _rigidbody.mass = mass;
         _grabInteractable = GetComponent<XRGrabInteractable>();
-        _grabInteractable.useDynamicAttach = false;
+        //_grabInteractable.useDynamicAttach = false;
+        collider = GetComponent<Collider>();
     }
 
     public void IsDynamicAttach(bool dynamicAttach)
     {
         if (dynamicAttach)
         {
-            _grabInteractable.useDynamicAttach = true;
+            if(Physics.CheckSphere(transform.position, 1, 20))
+            {
+                _grabInteractable.useDynamicAttach = false;
+            }
+            else
+            {
+                _grabInteractable.useDynamicAttach = true;
+            }
         }
         else
         {
