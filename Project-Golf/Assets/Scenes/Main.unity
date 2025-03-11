@@ -3651,7 +3651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &615544658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9158,7 +9158,7 @@ MonoBehaviour:
   timeStep: 0.1
   usePhysicsTimeStep: 0
   displayOrbits: 0
-  body: {fileID: 1179103159}
+  body: {fileID: 966447788}
 --- !u!4 &1542896545
 Transform:
   m_ObjectHideFlags: 0
