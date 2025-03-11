@@ -10,7 +10,10 @@ public class Shoot : MonoBehaviour
 
     public void shoot()
     {
-        Instantiate(asteroid, this.transform.position, Quaternion.identity);
+
+        SimulationManager.Instance.StopSimulation();
+        var obj =Instantiate(asteroid, this.transform.position, Quaternion.identity);
+        SimulationManager.Instance.AddCelestialBody(obj);
         SimulationManager.Instance.StartSimulation();
     }
 }
