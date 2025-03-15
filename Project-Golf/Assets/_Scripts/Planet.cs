@@ -23,22 +23,17 @@ public class Planet : MonoBehaviour
         collider = GetComponent<Collider>();
     }
 
-    public void IsDynamicAttach(bool dynamicAttach)
+    public void IsDynamicAttach()
     {
-        if (dynamicAttach)
+        IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
+        if (interactor.interactionLayers == InteractionLayerMask.GetMask("PlanetSocket"))
         {
-            if(Physics.CheckSphere(transform.position, 1, 20))
-            {
-                _grabInteractable.useDynamicAttach = false;
-            }
-            else
-            {
-                _grabInteractable.useDynamicAttach = true;
-            }
+            _grabInteractable.attachTransform = null;
+            _grabInteractable.useDynamicAttach = false;
         }
         else
         {
-            _grabInteractable.useDynamicAttach = false;
+            _grabInteractable.useDynamicAttach = true;
         }
     }
     
