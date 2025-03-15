@@ -68,4 +68,9 @@ public class SimulationManager : MonoBehaviour
     {
         return _planets;
     }
+
+    public void AddCelestialBody(GameObject obj)
+    {
+        _celestialBodies.Add(obj.GetComponent<CelestialBody>());
+    }
 }
