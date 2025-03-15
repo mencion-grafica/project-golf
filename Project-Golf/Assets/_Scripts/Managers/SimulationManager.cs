@@ -8,6 +8,12 @@ public class SimulationManager : MonoBehaviour
 {
     public static SimulationManager Instance { get; private set; }
 
+    public delegate void OnSimulationStart();
+    public delegate void OnSimulationStop();
+
+    public static event OnSimulationStart onSimulationStart;
+    public static event OnSimulationStart onSimulationStop;
+
     [Header("Simulation Settings")]
     [SerializeField] private float gravity = 0.0001f;
     [SerializeField] private float physicsTimeStep = 0.01f;
@@ -19,8 +25,9 @@ public class SimulationManager : MonoBehaviour
     
     [Header("Simulation State")]
     [SerializeField] private bool isSimulationRunning = false;
-    
+
     [ContextMenu("Get All Planets")]
+
     private void GetAllPlanets()
     {
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
@@ -50,12 +57,14 @@ public class SimulationManager : MonoBehaviour
     {
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
+        onSimulationStart?.Invoke();
     }
     
     public void StopSimulation()
     {
         isSimulationRunning = false;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
+        onSimulationStop?.Invoke();
     }
 
     private void FixedUpdate()
