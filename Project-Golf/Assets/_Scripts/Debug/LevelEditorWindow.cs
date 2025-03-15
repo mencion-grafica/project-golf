@@ -9,7 +9,9 @@ public class LevelEditorWindow : EditorWindow
 {
     private const string IconPath = "Assets/_Scripts/Debug/gear_icon_20px.png";
 
-    private List<Planet> _planets;
+    private List<GameObject> _planets;
+    private List<GameObject> _planetPoints;
+    private List<GameObject> _obstacles;
     private int _selectedToolbarIndex = 0;
     private bool _levelCreated = false;
     private string _levelName = "Level 1";
@@ -49,16 +51,20 @@ public class LevelEditorWindow : EditorWindow
         EditorUtility.ClearProgressBar();
     }
 
-    private void GetPlanets()
+    private void GetLevelData()
     {
-        _planets = new List<Planet>(FindObjectsOfType<Planet>());
+        _planets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
+        _obstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
+        List<GameObject> points = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
+        GameObject asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner");
+        
         _planets.Sort((a, b) => a.name.CompareTo(b.name));
     }
     
     private void CreateLevel()
     {
         _levelCreated = true;
-        ProgressBar(GetPlanets, "Creating Level", "Getting all obstacles, planets and points...", 5.0f);
+        ProgressBar(GetLevelData, "Creating Level", "Getting all obstacles, planets and points...", 5.0f);
         Notify("Level created!", 1.0f);
     }
 
@@ -67,17 +73,24 @@ public class LevelEditorWindow : EditorWindow
         try
         {
             SOLevelData levelData = CreateInstance<SOLevelData>();
+            
             levelData.planets = new List<SOLevelData.PlanetData>();
-            foreach (Planet planet in _planets)
+            foreach (Planet planet in _planets.ConvertAll(planet => planet.GetComponent<Planet>()))
             {
                 levelData.planets.Add(new SOLevelData.PlanetData
                 {
                     name = planet.name,
-                    position = planet.transform.position,
-                    mass = planet.GetMass(),
-                    prefab = planet.gameObject
+                    transform = new SOLevelData.TransformData
+                    {
+                        position = planet.transform.position,
+                        rotation = planet.transform.rotation,
+                        scale = planet.transform.localScale
+                    },
+                    type = SOLevelData.PlanetType.MediumMass,
+                    mass = planet.GetMass()
                 });
             }
+            
             AssetDatabase.CreateAsset(levelData, SavingAssetPath + _levelName + ".asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -115,39 +128,41 @@ public class LevelEditorWindow : EditorWindow
 
     private void LoadLevel()
     {
-        Notify("Level loaded!", 1.0f);
-        
-        if (Selection.activeObject is SOLevelData levelData)
-        {
-            if (Selection.assetGUIDs.Length > 1)
-            {
-                Notify("Select only one level asset!", 1.0f);
-                Debug.LogError("Select only one level asset!");
-                return;
-            }
-            
-            ProgressBar(() => { }, "Loading Level", "Loading all obstacles, planets and points...", 5.0f);
-
-            _levelCreated = true;
-            _levelName = levelData.name;
-            _planets = new List<Planet>();
-            
-            foreach (SOLevelData.PlanetData planetData in levelData.planets)
-            {
-                GameObject planet = Instantiate(planetData.prefab, planetData.position, Quaternion.identity);
-                //planet.transform.position = planetData.position;
-                //planet.AddComponent<Rigidbody>();
-                //planet.AddComponent<Planet>().SetMass(planetData.mass);
-                planet.name = planetData.name;
-                planet.GetComponent<Planet>().SetMass(planetData.mass);
-                _planets.Add(planet.GetComponent<Planet>());
-            }
-        }
-        else
+        if (Selection.activeObject is not SOLevelData levelData)
         {
             Notify("Select a level asset!", 1.0f);
             Debug.LogError("Select a level asset!");
+            return;
         }
+        
+        if (Selection.assetGUIDs.Length > 1)
+        {
+            Notify("Select only one level asset!", 1.0f);
+            Debug.LogError("Select only one level asset!");
+            return;
+        }
+            
+        ProgressBar(() => { }, "Loading Level", "Loading all obstacles, planets and points...", 5.0f);
+
+        _levelCreated = true;
+        _levelName = levelData.name;
+        _planets = new List<GameObject>();
+        
+        // TODO: Clear scene from previous planets, obstacles and points
+        // TODO: Load new data
+        
+        /*foreach (SOLevelData.PlanetData planetData in levelData.planets)
+        {
+            //GameObject planet = Instantiate(, planetData.position, Quaternion.identity);
+            //planet.transform.position = planetData.position;
+            //planet.AddComponent<Rigidbody>();
+            //planet.AddComponent<Planet>().SetMass(planetData.mass);
+            //planet.name = planetData.name;
+            //planet.GetComponent<Planet>().SetMass(planetData.mass);
+            //_planets.Add(planet.GetComponent<Planet>());
+        }*/
+        
+        Notify("Level loaded!", 1.0f);
     }
 
     private void Title(string title, bool center = true)
@@ -200,13 +215,13 @@ public class LevelEditorWindow : EditorWindow
         Space(_bigSpace);
         
         StartHorizontal();
-        Button("Create Level", CreateLevel, "Create the level data from all obstacles, planets and points");
-        Button("Load Level", LoadLevel, "Load the level data from a ScriptableObject asset");
+        if (!_levelCreated) Button("Create Level", CreateLevel, "Create the level data from all obstacles, planets and points");
+        if (!_levelCreated) Button("Load Level", LoadLevel, "Load the level data from a ScriptableObject asset");
         EndHorizontal();
         
         if (_levelCreated)
         {
-            Space(_bigSpace);
+            //Space(_bigSpace);
             
             GUILayout.BeginHorizontal();
             GUILayout.Label("Level Name");
@@ -217,15 +232,26 @@ public class LevelEditorWindow : EditorWindow
             _selectedToolbarIndex = GUILayout.Toolbar(_selectedToolbarIndex, new[] {"Obstacles", "Planets", "Points"});
             //Space(_bigSpace);
             
-            foreach (Planet planet in _planets)
+            foreach (Planet planet in _planets.ConvertAll(planet => planet.GetComponent<Planet>()))
             {
                 if (_selectedToolbarIndex == 1)
                 {
                     Title(planet.name, false);
                     
+                    GUILayout.Label("Transform");
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Position");
                     EditorGUILayout.Vector3Field("", planet.transform.position);
+                    GUILayout.EndHorizontal();
+                    
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Rotation");
+                    EditorGUILayout.Vector3Field("", planet.transform.rotation.eulerAngles);
+                    GUILayout.EndHorizontal();
+                    
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label("Scale");
+                    EditorGUILayout.Vector3Field("", planet.transform.localScale);
                     GUILayout.EndHorizontal();
                     
                     GUILayout.BeginHorizontal();
