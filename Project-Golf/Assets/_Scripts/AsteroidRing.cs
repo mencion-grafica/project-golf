@@ -12,6 +12,6 @@ public class AsteroidRing : MonoBehaviour
     void Update()
     {
         y += Time.deltaTime * rotationVelocity;
-        transform.rotation = Quaternion.Euler(0, y, 0);
+        transform.rotation = Quaternion.Euler(transform.rotation.x, y, transform.rotation.z);
     }
 }

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35edeae9764864419a1742483435695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: {x: -8, y: 0, z: 0}
+  initialVelocity: {x: -10, y: 0, z: 0}
   mass: 100
   radius: 1
   surfaceGravity: 100
