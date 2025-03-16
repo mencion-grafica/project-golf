@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
@@ -13,28 +13,50 @@ public class WormHole : Planet
     private Vector3 frontPosition;
     private double distanciaAsteroide;
     private double distancia;
-
+    private Vector3 asteroidPosition;
+    private Vector3 wormPosition;
+    private Vector3 vectorDirectorRecta;
 
     private void OnCollisionEnter(Collision other)
     {
+        Asteroid asteroid = other.gameObject.GetComponent<Asteroid>();
         if (planet != null && planet != this)
         {
-            Asteroid asteroid = other.gameObject.GetComponent<Asteroid>();
-            Rigidbody rb = this.gameObject.GetComponent<Rigidbody>();
-            frontPosition = rb.transform.forward * (rb.transform.localScale[0] / 2) + rb.transform.position;
-            distanciaAsteroide = Math.Sqrt(Math.Pow(frontPosition[0] - asteroid.transform.position[0], 2) +
-                                  Math.Pow(frontPosition[1] - asteroid.transform.position[1], 2) +
-                                  Math.Pow(frontPosition[2] - asteroid.transform.position[2], 2));
-            distancia = Math.Sqrt(2 * Math.Pow(rb.transform.localScale[0] / 2, 2));
-            if (asteroid != null && distanciaAsteroide < distancia + 0.5)
+            // Obtener el vector de movimiento del asteroide (su dirección normalizada)
+            vectorDirectorRecta = asteroid.GetCurrentVelocity().normalized;
+
+            // Obtener el vector forward del wormhole
+            Vector3 vectorUp = transform.up.normalized;
+
+            // Calcular el producto punto
+            float productoPunto = Vector3.Dot(vectorDirectorRecta, vectorUp);
+
+            // Obtener el ángulo en radianes
+            float anguloRadianes = Mathf.Acos(productoPunto);
+
+            // Convertir a grados
+            float anguloGrados = anguloRadianes * Mathf.Rad2Deg;
+
+            // Imprimir el resultado
+            if(anguloGrados > 90 && anguloGrados <= 180)
             {
-                Vector3 teleportPosition = planet.GetPosition() + 4 * planet.transform.forward;
+                Vector3 teleportPosition = planet.GetPosition() + 4 * planet.transform.up;
                 asteroidVelocity = asteroid.GetCurrentVelocity();
                 other.transform.position = teleportPosition;
-                asteroidVelocityFloat = Math.Abs(asteroidVelocity[0] + asteroidVelocity[1] + asteroidVelocity[2]);
-                asteroid.SetCurrentVelocity(planet.transform.forward * asteroidVelocityFloat);
+                asteroidVelocityFloat = asteroidVelocity.magnitude;
+
+                asteroid.SetCurrentVelocity(planet.transform.up * asteroidVelocityFloat);
             }
+            Debug.Log("Ángulo entre el asteroide y forward del Wormhole: " + asteroid.GetCurrentVelocity() + "°" + anguloGrados);
+
         }
     }
 }
+//vectorForward
+//180-270 +     +
+//90-180 -      -
 
+//0-90 -        +
+//270-360 -     -
+
+//0-45  +
