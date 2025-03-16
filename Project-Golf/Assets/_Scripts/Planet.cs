@@ -6,7 +6,9 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Planet : MonoBehaviour
 {
-    [SerializeField, Range(0.0f, 10000.0f)] private float mass = 1.0f;
+    [SerializeField] private SOLevelData.PlanetType type;
+    [SerializeField, Range(0.0f, 100000.0f)] private float mass = 1.0f;
+    
     private Transform _center;
     private Rigidbody _rigidbody;
     
@@ -25,6 +27,16 @@ public class Planet : MonoBehaviour
     public float GetMass()
     {
         return mass;
+    }
+    
+    public SOLevelData.PlanetType GetPlanetType()
+    {
+        return type;
+    }
+    
+    public void SetPlanetType(SOLevelData.PlanetType type)
+    {
+        this.type = type;
     }
 
     public void SetMass(float mass)

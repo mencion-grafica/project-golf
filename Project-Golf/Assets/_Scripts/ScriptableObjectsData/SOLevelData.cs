@@ -17,7 +17,8 @@ public class SOLevelData : ScriptableObject
         AsteroidRing,
         BlackHole,
         WormHole,
-        Satellite
+        Satellite,
+        Null
     }
 
     [Serializable]
@@ -40,6 +41,7 @@ public class SOLevelData : ScriptableObject
     [Serializable]
     public struct PlanetPointData
     {
+        public string name;
         public TransformData transform;
     }
 
