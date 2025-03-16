@@ -25,7 +25,7 @@ public class WormHole : Planet
             // Obtener el vector de movimiento del asteroide (su dirección normalizada)
             vectorDirectorRecta = asteroid.GetCurrentVelocity().normalized;
 
-            // Obtener el vector forward del wormhole
+            // Obtener el vector forward/up del wormhole
             Vector3 vectorUp = transform.up.normalized;
 
             // Calcular el producto punto
@@ -40,7 +40,8 @@ public class WormHole : Planet
             // Imprimir el resultado
             if(anguloGrados > 90 && anguloGrados <= 180)
             {
-                Vector3 teleportPosition = planet.GetPosition() + 4 * planet.transform.up;
+                //Vector3 teleportPosition = planet.GetPosition() + 4 * planet.transform.up;
+                Vector3 teleportPosition = planet.GetPosition() + 1 * planet.transform.up;
                 asteroidVelocity = asteroid.GetCurrentVelocity();
                 other.transform.position = teleportPosition;
                 asteroidVelocityFloat = asteroidVelocity.magnitude;
