@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 [ExecuteInEditMode]
 public class Planet : MonoBehaviour
@@ -11,12 +12,31 @@ public class Planet : MonoBehaviour
     
     private Transform _center;
     private Rigidbody _rigidbody;
+    private XRGrabInteractable _grabInteractable;
+    private Collider collider;
     
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _center = transform;
         _rigidbody.mass = mass;
+        _grabInteractable = GetComponent<XRGrabInteractable>();
+        //_grabInteractable.useDynamicAttach = false;
+        collider = GetComponent<Collider>();
+    }
+
+    public void IsDynamicAttach()
+    {
+        IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
+        if (interactor.interactionLayers == InteractionLayerMask.GetMask("PlanetSocket"))
+        {
+            _grabInteractable.attachTransform = null;
+            _grabInteractable.useDynamicAttach = false;
+        }
+        else
+        {
+            _grabInteractable.useDynamicAttach = true;
+        }
     }
     
     public float GetRadius()

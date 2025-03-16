@@ -19,7 +19,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - DarkSide
+  - SimulationMode
   - LightSide
   - Gun
   - Magazine
@@ -33,7 +33,7 @@ TagManager:
   - Tablet
   - Scene
   - XR Interaction
-  - 
+  - PlanetPoint
   - 
   - 
   - 
