@@ -2,31 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class LevelEditorWindow : EditorWindow
 {
     private const string IconPath = "Assets/_Scripts/Debug/gear_icon_20px.png";
 
-    private List<Planet> _planets;
+    private List<GameObject> _planets;
+    private List<GameObject> _planetPoints;
+    private List<GameObject> _obstacles;
+    private List<bool> _planetFoldouts;
+    private List<bool> _pointFoldouts;
+    private List<bool> _obstacleFoldouts;
+    
     private int _selectedToolbarIndex = 0;
     private bool _levelCreated = false;
     private string _levelName = "Level 1";
     private float _bigSpace = 15.0f;
     private float _smallSpace = 5.0f;
     private const string SavingAssetPath = "Assets/_Scripts/ScriptableObjectsData/";
+    private const bool OpenedFoldoutsFromStart = true;
     
-    [MenuItem("Level Editor/Show Window")]
+    [MenuItem("Level Editor/Show Window %l", priority = 0)] // Ctrl + L
     public static void ShowWindow()
     {
-        EditorWindow window = GetWindow<LevelEditorWindow>();
+        EditorWindow window = GetWindow<LevelEditorWindow>("Level Editor", true, Type.GetType("UnityEditor.InspectorWindow,UnityEditor.dll"));
         Texture icon = AssetDatabase.LoadAssetAtPath<Texture>(IconPath);
         window.titleContent = new GUIContent("Level Editor", icon);
         window.autoRepaintOnSceneChange = true;
     }
     
-    [MenuItem("Level Editor/Hide Window")]
+    [MenuItem("Level Editor/Hide Window %&l", priority = 1)] // Ctrl + Alt + L
     public static void HideWindow()
     {
         GetWindow<LevelEditorWindow>().Close();
@@ -44,21 +52,34 @@ public class LevelEditorWindow : EditorWindow
         for (float t = 0; t < time; t += step)
         {
             EditorUtility.DisplayProgressBar(title, info, t / time);
-            Thread.Sleep((int)(step * 100.0f)); // Simulate work
+            Thread.Sleep((int)(step * 1000.0f));
         }
         EditorUtility.ClearProgressBar();
     }
 
-    private void GetPlanets()
+    private void GetLevelData()
     {
-        _planets = new List<Planet>(FindObjectsOfType<Planet>());
+        _planets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
+        _obstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
+        _planetPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
+        _planetFoldouts = new List<bool>(_planets.Count);
+        _pointFoldouts = new List<bool>(_planetPoints.Count);
+        _obstacleFoldouts = new List<bool>(_obstacles.Count);
+        for (int i = 0; i < _planets.Count; i++) _planetFoldouts.Add(OpenedFoldoutsFromStart);
+        for (int i = 0; i < _planetPoints.Count; i++) _pointFoldouts.Add(OpenedFoldoutsFromStart);
+        for (int i = 0; i < _obstacles.Count; i++) _obstacleFoldouts.Add(OpenedFoldoutsFromStart);
+        
+        GameObject asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner");
+        
         _planets.Sort((a, b) => a.name.CompareTo(b.name));
+        _obstacles.Sort((a, b) => a.name.CompareTo(b.name));
+        _planetPoints.Sort((a, b) => a.name.CompareTo(b.name));
     }
     
     private void CreateLevel()
     {
         _levelCreated = true;
-        ProgressBar(GetPlanets, "Creating Level", "Getting all obstacles, planets and points...", 5.0f);
+        ProgressBar(GetLevelData, "Creating Level", "Getting all obstacles, planets and points...", 0.5f);
         Notify("Level created!", 1.0f);
     }
 
@@ -67,25 +88,60 @@ public class LevelEditorWindow : EditorWindow
         try
         {
             SOLevelData levelData = CreateInstance<SOLevelData>();
+            
             levelData.planets = new List<SOLevelData.PlanetData>();
-            foreach (Planet planet in _planets)
+            foreach (Planet planet in _planets.ConvertAll(planet => planet.GetComponent<Planet>()))
             {
                 levelData.planets.Add(new SOLevelData.PlanetData
                 {
                     name = planet.name,
-                    position = planet.transform.position,
-                    mass = planet.GetMass(),
-                    prefab = planet.gameObject
+                    transform = new SOLevelData.TransformData
+                    {
+                        position = planet.transform.position,
+                        rotation = planet.transform.rotation,
+                        scale = planet.transform.localScale
+                    },
+                    type = planet.GetPlanetType(),
+                    mass = planet.GetMass()
                 });
             }
+            
+            levelData.planetPoints = new List<SOLevelData.PlanetPointData>();
+            foreach (GameObject point in _planetPoints)
+            {
+                levelData.planetPoints.Add(new SOLevelData.PlanetPointData
+                {
+                    name = point.name,
+                    transform = new SOLevelData.TransformData
+                    {
+                        position = point.transform.position,
+                        rotation = point.transform.rotation,
+                        scale = point.transform.localScale
+                    }
+                });
+            }
+            
+            // TODO: Add obstacles
+            
             AssetDatabase.CreateAsset(levelData, SavingAssetPath + _levelName + ".asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+            
+            Selection.activeObject = levelData;
         }
         catch (Exception e)
         {
             Notify(e.Message, 2.0f);
             Debug.LogError(e, this);
+        }
+    }
+    
+    private void CloseLevel()
+    {
+        if (EditorUtility.DisplayDialog("Close Level", "Are you sure you want to close the level?", "Yes", "No"))
+        {
+            _levelCreated = false;
+            Notify("Level closed!", 1.0f);
         }
     }
     
@@ -107,7 +163,7 @@ public class LevelEditorWindow : EditorWindow
             return;
         }
         
-        ProgressBar(CreateSOLevelData, "Saving " + _levelName, "Saving all obstacles, planets and points...", 5.0f);
+        ProgressBar(CreateSOLevelData, "Saving " + _levelName, "Saving all obstacles, planets and points...", 1.0f);
         
         Notify("Level saved!", 1.0f);
         _levelCreated = false;
@@ -115,39 +171,58 @@ public class LevelEditorWindow : EditorWindow
 
     private void LoadLevel()
     {
-        Notify("Level loaded!", 1.0f);
+        string path = EditorUtility.OpenFilePanel("Open Level from Scriptable Object", SavingAssetPath, "asset");
+        string[] paths = path.Split("/");
+        path = paths[^1];
+        Selection.activeObject = AssetDatabase.LoadAssetAtPath<SOLevelData>(SavingAssetPath + path);
         
-        if (Selection.activeObject is SOLevelData levelData)
-        {
-            if (Selection.assetGUIDs.Length > 1)
-            {
-                Notify("Select only one level asset!", 1.0f);
-                Debug.LogError("Select only one level asset!");
-                return;
-            }
-            
-            ProgressBar(() => { }, "Loading Level", "Loading all obstacles, planets and points...", 5.0f);
-
-            _levelCreated = true;
-            _levelName = levelData.name;
-            _planets = new List<Planet>();
-            
-            foreach (SOLevelData.PlanetData planetData in levelData.planets)
-            {
-                GameObject planet = Instantiate(planetData.prefab, planetData.position, Quaternion.identity);
-                //planet.transform.position = planetData.position;
-                //planet.AddComponent<Rigidbody>();
-                //planet.AddComponent<Planet>().SetMass(planetData.mass);
-                planet.name = planetData.name;
-                planet.GetComponent<Planet>().SetMass(planetData.mass);
-                _planets.Add(planet.GetComponent<Planet>());
-            }
-        }
-        else
+        if (Selection.activeObject is not SOLevelData levelData)
         {
             Notify("Select a level asset!", 1.0f);
             Debug.LogError("Select a level asset!");
+            return;
         }
+        
+        if (Selection.assetGUIDs.Length > 1)
+        {
+            Notify("Select only one level asset!", 1.0f);
+            Debug.LogError("Select only one level asset!");
+            return;
+        }
+            
+        ProgressBar(() => { }, "Loading Level", "Loading all obstacles, planets and points...", 0.5f);
+
+        _levelCreated = true;
+        _levelName = levelData.name;
+        
+        _planets = new List<GameObject>();
+        _obstacles = new List<GameObject>();
+        _planetPoints = new List<GameObject>();
+        
+        List<GameObject> previousPlanets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
+        List<GameObject> previousObstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
+        List<GameObject> previousPlanetPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
+        //foreach (GameObject planet in previousPlanets) DestroyImmediate(planet);
+        //foreach (GameObject obstacle in previousObstacles) DestroyImmediate(obstacle);
+        //foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
+        
+        // TODO: Load new data
+        foreach (SOLevelData.PlanetPointData pointData in levelData.planetPoints)
+        {
+                
+        }
+        
+        foreach (SOLevelData.PlanetData planetData in levelData.planets)
+        {
+            
+        }
+        
+        foreach (SOLevelData.ObstacleData obstacleData in levelData.obstacles)
+        {
+            
+        }
+        
+        Notify("Level loaded!", 1.0f);
     }
 
     private void Title(string title, bool center = true)
@@ -170,7 +245,7 @@ public class LevelEditorWindow : EditorWindow
         GUILayout.FlexibleSpace();
     }
     
-    private void EndHorizontal()
+    private void FinishHorizontal()
     {
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
@@ -188,61 +263,184 @@ public class LevelEditorWindow : EditorWindow
         GUILayout.EndVertical();
     }
     
+    private void Label(string text)
+    {
+        GUILayout.Label(text);
+    }
+    
+    private void PrefixLabel(string text)
+    {
+        EditorGUILayout.PrefixLabel(text);
+    }
+    
     private void Space(float space)
     {
         GUILayout.Space(space);
+    }
+    
+    private void Separator()
+    {
+        GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
+    }
+    
+    private void BeginHorizontal()
+    {
+        GUILayout.BeginHorizontal();
+    }
+    
+    private void EndHorizontal()
+    {
+        GUILayout.EndHorizontal();
+    }
+
+    private SOLevelData.ObstacleType GetObstacleType(GameObject obstacle)
+    {
+        if (obstacle.GetComponent<WormHole>()) return SOLevelData.ObstacleType.WormHole;
+        if (obstacle.GetComponent<AsteroidRing>()) return SOLevelData.ObstacleType.AsteroidRing;
+        if (obstacle.GetComponent<Satellite>()) return SOLevelData.ObstacleType.Satellite;
+        if (obstacle.GetComponent<Planet>()) return SOLevelData.ObstacleType.BlackHole;
+        return SOLevelData.ObstacleType.Null;
     }
     
     private void OnGUI()
     {
         Space(_bigSpace);
         Title(!_levelCreated ? "This will get all obstacles, planets and points for a level." : "Level Editor");
+        
+        Space(_bigSpace);
+        Separator();
         Space(_bigSpace);
         
         StartHorizontal();
-        Button("Create Level", CreateLevel, "Create the level data from all obstacles, planets and points");
-        Button("Load Level", LoadLevel, "Load the level data from a ScriptableObject asset");
-        EndHorizontal();
+        if (!_levelCreated) Button("Create Level", CreateLevel, "Create the level data from all obstacles, planets and points");
+        if (!_levelCreated) Button("Load Level", LoadLevel, "Load the level data from a ScriptableObject asset");
+        FinishHorizontal();
         
         if (_levelCreated)
         {
-            Space(_bigSpace);
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Level Name");
+            BeginHorizontal();
+            Label("Level Name");
             _levelName = EditorGUILayout.TextField("", _levelName);
-            GUILayout.EndHorizontal();
+            EndHorizontal();
             
             Space(_bigSpace);
-            _selectedToolbarIndex = GUILayout.Toolbar(_selectedToolbarIndex, new[] {"Obstacles", "Planets", "Points"});
-            //Space(_bigSpace);
             
-            foreach (Planet planet in _planets)
+            string[] toolbarOptions = {"Obstacles", "Planets", "Points"};
+            List<string> toolbarOptionsList = new List<string>(toolbarOptions);
+            _selectedToolbarIndex = GUILayout.Toolbar(_selectedToolbarIndex, toolbarOptions);
+            Space(_bigSpace);
+            
+            if (_selectedToolbarIndex == toolbarOptionsList.IndexOf("Planets"))
             {
-                if (_selectedToolbarIndex == 1)
+                foreach (Planet planet in _planets.ConvertAll(planet => planet.GetComponent<Planet>()))
                 {
-                    Title(planet.name, false);
-                    
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Position");
-                    EditorGUILayout.Vector3Field("", planet.transform.position);
-                    GUILayout.EndHorizontal();
-                    
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label("Mass");
-                    EditorGUILayout.FloatField("", planet.GetMass());
-                    GUILayout.EndHorizontal();
-                    
-                    Space(_smallSpace);
+                    _planetFoldouts[_planets.IndexOf(planet.transform.gameObject)] = EditorGUILayout.Foldout(_planetFoldouts[_planets.IndexOf(planet.transform.gameObject)], planet.name, true);
+                    if (_planetFoldouts[_planets.IndexOf(planet.transform.gameObject)])
+                    {
+                        Label("Transform");
+                        BeginHorizontal();
+                        PrefixLabel("Position");
+                        planet.transform.position = EditorGUILayout.Vector3Field("", planet.transform.position);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Rotation");
+                        planet.transform.eulerAngles = EditorGUILayout.Vector3Field("", planet.transform.rotation.eulerAngles);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Scale");
+                        planet.transform.localScale = EditorGUILayout.Vector3Field("", planet.transform.localScale);
+                        EndHorizontal();
+
+                        Space(_smallSpace);
+
+                        BeginHorizontal();
+                        PrefixLabel("Mass");
+                        planet.SetMass(EditorGUILayout.FloatField("", planet.GetMass()));
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Planet Type");
+                        planet.SetPlanetType((SOLevelData.PlanetType) EditorGUILayout.EnumPopup("", planet.GetPlanetType()));
+                        EndHorizontal();
+                        
+                        Space(_bigSpace);
+                    }
+                }
+            }
+            else if (_selectedToolbarIndex == toolbarOptionsList.IndexOf("Obstacles"))
+            {
+                foreach (GameObject obstacle in _obstacles)
+                {
+                    _obstacleFoldouts[_obstacles.IndexOf(obstacle)] = EditorGUILayout.Foldout(_obstacleFoldouts[_obstacles.IndexOf(obstacle)], obstacle.name, true);
+                    if (_obstacleFoldouts[_obstacles.IndexOf(obstacle)])
+                    {
+                        Label("Transform");
+                        BeginHorizontal();
+                        PrefixLabel("Position");
+                        obstacle.transform.position = EditorGUILayout.Vector3Field("", obstacle.transform.position);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Rotation");
+                        obstacle.transform.eulerAngles = EditorGUILayout.Vector3Field("", obstacle.transform.rotation.eulerAngles);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Scale");
+                        obstacle.transform.localScale = EditorGUILayout.Vector3Field("", obstacle.transform.localScale);
+                        EndHorizontal();
+
+                        Space(_smallSpace);
+
+                        BeginHorizontal();
+                        Label("Obstacle Type");
+                        SOLevelData.ObstacleType type = GetObstacleType(obstacle);
+                        EditorGUILayout.EnumPopup("", type);
+                        EndHorizontal();
+                        
+                        Space(_bigSpace);
+                    }
+                }
+            }
+            else if (_selectedToolbarIndex == toolbarOptionsList.IndexOf("Points"))
+            {
+                foreach (GameObject point in _planetPoints)
+                {
+                    _pointFoldouts[_planetPoints.IndexOf(point)] = EditorGUILayout.Foldout(_pointFoldouts[_planetPoints.IndexOf(point)], point.name, true);
+                    if (_pointFoldouts[_planetPoints.IndexOf(point)])
+                    {
+                        Label("Transform");
+                        BeginHorizontal();
+                        PrefixLabel("Position");
+                        point.transform.position = EditorGUILayout.Vector3Field("", point.transform.position);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Rotation");
+                        point.transform.eulerAngles = EditorGUILayout.Vector3Field("", point.transform.rotation.eulerAngles);
+                        EndHorizontal();
+
+                        BeginHorizontal();
+                        PrefixLabel("Scale");
+                        point.transform.localScale = EditorGUILayout.Vector3Field("", point.transform.localScale);
+                        EndHorizontal();
+                        
+                        Space(_bigSpace);
+                    }
                 }
             }
             
             Space(_bigSpace);
+            Separator();
+            Space(_bigSpace);
             
             StartHorizontal();
-            Button("Close Level", () => _levelCreated = false, "Close the level loaded. Does not delete the level data");
-            Button("Save Level", SaveLevel, "Save the level data to a ScriptableObject asset");
-            EndHorizontal();
+            Button("Close Level", CloseLevel, "Close the level loaded. Does not delete the level data");
+            Button("Save Level", SaveLevel, "Save the level data to a ScriptableObject asset at " + SavingAssetPath);
+            FinishHorizontal();
         }
     }
 }
+#endif
