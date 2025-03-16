@@ -48,7 +48,7 @@ public class WormHole : Planet
 
                 asteroid.SetCurrentVelocity(planet.transform.up * asteroidVelocityFloat);
             }
-            Debug.Log("Ángulo entre el asteroide y forward del Wormhole: " + asteroid.GetCurrentVelocity() + "°" + anguloGrados);
+            //Debug.Log("Ángulo entre el asteroide y forward del Wormhole: " + asteroid.GetCurrentVelocity() + "°" + anguloGrados);
 
         }
     }

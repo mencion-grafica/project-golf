@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da9152642d64114db7b62287d1570d9, type: 3}
+  m_Name: Level 4
+  m_EditorClassIdentifier: 
+  planets:
+  - name: PlanetPrototype
+    transform:
+      position: {x: 0, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 0
+    mass: 3500
+  - name: PlanetPrototype_01
+    transform:
+      position: {x: 3, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 1
+    mass: 6000
+  - name: PlanetPrototype_02
+    transform:
+      position: {x: 6, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 2
+    mass: 7000
+  - name: PlanetPrototype_03
+    transform:
+      position: {x: 9, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 0
+    mass: 7000
+  - name: PlanetPrototype_04
+    transform:
+      position: {x: 12, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 0
+    mass: 7000
+  planetPoints:
+  - name: PlanetPoint
+    transform:
+      position: {x: 8.56, y: 6.2, z: -19.4}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_01
+    transform:
+      position: {x: -1.68, y: 6.84, z: 12.9}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_02
+    transform:
+      position: {x: -11.77, y: 4.85, z: 12.9}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_03
+    transform:
+      position: {x: 10.94, y: 4.85, z: 21.54}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_04
+    transform:
+      position: {x: 13.76, y: 11.08, z: -11.36}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  obstacles: []

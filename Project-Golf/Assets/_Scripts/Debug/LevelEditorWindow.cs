@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class LevelEditorWindow : EditorWindow
 {
@@ -294,10 +295,10 @@ public class LevelEditorWindow : EditorWindow
 
     private SOLevelData.ObstacleType GetObstacleType(GameObject obstacle)
     {
-        if (obstacle.GetComponent<Planet>()) return SOLevelData.ObstacleType.BlackHole;
-        //if (obstacle.GetComponent<AsteroidRing>()) return SOLevelData.ObstacleType.AsteroidRing;
-        //if (obstacle.GetComponent<WormHole>()) return SOLevelData.ObstacleType.WormHole;
+        if (obstacle.GetComponent<WormHole>()) return SOLevelData.ObstacleType.WormHole;
+        if (obstacle.GetComponent<AsteroidRing>()) return SOLevelData.ObstacleType.AsteroidRing;
         if (obstacle.GetComponent<Satellite>()) return SOLevelData.ObstacleType.Satellite;
+        if (obstacle.GetComponent<Planet>()) return SOLevelData.ObstacleType.BlackHole;
         return SOLevelData.ObstacleType.Null;
     }
     
@@ -442,3 +443,4 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 }
+#endif

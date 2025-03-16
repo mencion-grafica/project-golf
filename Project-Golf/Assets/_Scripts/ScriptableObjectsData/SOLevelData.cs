@@ -20,7 +20,27 @@ public class SOLevelData : ScriptableObject
         Satellite,
         Null
     }
-
+    
+    [Serializable]
+    public struct SatelliteData
+    {
+        public string planet;
+        public Vector3 initialVelocity;
+    }
+    
+    [Serializable]
+    public struct BlackHoleData
+    {
+        public float mass;
+    }
+    
+    [Serializable]
+    public struct WormHoleData
+    {
+        public string planet;
+        public int teleportOffset;
+    }
+    
     [Serializable]
     public struct TransformData
     {
@@ -49,8 +69,9 @@ public class SOLevelData : ScriptableObject
     public struct ObstacleData
     {
         public string name;
-        public ObstacleType type;
         public TransformData transform;
+        public ObstacleType type;
+        
     }
     
     [Header("Planets")]

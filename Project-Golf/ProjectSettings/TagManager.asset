@@ -12,6 +12,9 @@ TagManager:
   - Planet
   - Asteroid
   - AsteroidSpawner
+  - WormHole
+  - TargetPlanet
+  - AsteroidRing
   layers:
   - Default
   - TransparentFX
