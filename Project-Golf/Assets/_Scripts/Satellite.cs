@@ -32,7 +32,7 @@ public class Satellite : CelestialBody
     
     public override void StartSimulation()
     {
-        //initialVelocity = CalculateOrbit();
+        initialVelocity = CalculateOrbit();
         base.Start();
         _velocity = initialVelocity;
     }

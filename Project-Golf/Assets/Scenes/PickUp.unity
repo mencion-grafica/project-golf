@@ -943,13 +943,40 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+--- !u!1 &272918880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2762489623776938245, guid: a21ed2a7936d5f9418a3abfa5e6be68e,
+    type: 3}
+  m_PrefabInstance: {fileID: 7100497046084683146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &272918882
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272918880}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &401656630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,6 +2773,12 @@ Transform:
   - {fileID: 401656631}
   m_Father: {fileID: 97308221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1806354049 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 5538614372223103091, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4430728207628246965}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1809058404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,6 +3029,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlanetPrototype
       objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_SelectMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_ThrowOnDetach
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_UseDynamicAttach
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_Colliders.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_Colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 1806354049}
+    - target: {fileID: 4756737585196190522, guid: a9de52b38a8ff144691ae6b0a9b844c0,
+        type: 3}
+      propertyPath: m_AddDefaultGrabTransformers
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8476477872522708736, guid: a9de52b38a8ff144691ae6b0a9b844c0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3046,8 +3109,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 618313525490215928, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
+    - {fileID: 5154565420959268699, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 1878684025514136382, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9de52b38a8ff144691ae6b0a9b844c0, type: 3}
@@ -3063,6 +3129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlanetPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021429831812557629, guid: a21ed2a7936d5f9418a3abfa5e6be68e,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 8324756549910726870, guid: a21ed2a7936d5f9418a3abfa5e6be68e,
         type: 3}
@@ -3114,10 +3185,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8714197202920480071, guid: a21ed2a7936d5f9418a3abfa5e6be68e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2762489623776938245, guid: a21ed2a7936d5f9418a3abfa5e6be68e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 272918882}
   m_SourcePrefab: {fileID: 100100000, guid: a21ed2a7936d5f9418a3abfa5e6be68e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
