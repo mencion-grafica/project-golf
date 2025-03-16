@@ -276,16 +276,16 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 2.0799987, y: 4.21, z: -19.99999}
-  - {x: 2.079996, y: 4.2099996, z: -18.99997}
-  - {x: 2.0799918, y: 4.2099986, z: -17.999935}
-  - {x: 2.0799856, y: 4.209997, z: -16.999886}
-  - {x: 2.079977, y: 4.2099953, z: -15.999817}
-  - {x: 2.0799658, y: 4.2099924, z: -14.999726}
-  - {x: 2.0799513, y: 4.2099876, z: -13.999609}
-  - {x: 2.079933, y: 4.20998, z: -12.999455}
-  - {x: 2.07991, y: 4.2099667, z: -11.99925}
-  - {x: 2.0798817, y: 4.209942, z: -10.998966}
+  - {x: 2.0800014, y: 4.21, z: -19.999992}
+  - {x: 2.0800042, y: 4.2099996, z: -18.999977}
+  - {x: 2.0800087, y: 4.2099986, z: -17.999952}
+  - {x: 2.080015, y: 4.209997, z: -16.999916}
+  - {x: 2.080023, y: 4.2099953, z: -15.999866}
+  - {x: 2.0800328, y: 4.209992, z: -14.999797}
+  - {x: 2.0800447, y: 4.209987, z: -13.999705}
+  - {x: 2.0800586, y: 4.209979, z: -12.999582}
+  - {x: 2.0800745, y: 4.2099657, z: -11.999413}
+  - {x: 2.0800927, y: 4.2099404, z: -10.999168}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -920,7 +920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &584838599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1091,6 +1091,11 @@ PrefabInstance:
     - target: {fileID: 58004084337994293, guid: 80c6dae8b43c44d469969a88d3dad1c2,
         type: 3}
       propertyPath: m_Name
+      value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 58004084337994293, guid: 80c6dae8b43c44d469969a88d3dad1c2,
+        type: 3}
+      propertyPath: m_TagString
       value: Asteroid
       objectReference: {fileID: 0}
     - target: {fileID: 8682314395000727163, guid: 80c6dae8b43c44d469969a88d3dad1c2,
@@ -2053,7 +2058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2125621168
 MonoBehaviour:
   m_ObjectHideFlags: 0
