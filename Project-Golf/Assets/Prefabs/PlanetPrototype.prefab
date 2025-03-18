@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 7698944417864140613}
   - component: {fileID: 2054215612612252934}
   - component: {fileID: 3080318859547234748}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: PlanetPrototype
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b16900cb735b54eb7f2ba7a06af8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   mass: 6000
 --- !u!1001 &8036151581409668743
 PrefabInstance:

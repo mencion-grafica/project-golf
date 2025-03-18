@@ -20,13 +20,13 @@ public class Player : MonoBehaviour
         SimulationManager.onSimulationStop -= PuzzlePhase;
     }
 
-    /*private void Start()
+    private void Start()
     {
         foreach (GameObject hand in hands)
         {
-            hand.layer = 6;
+            hand.layer = 0;
         }
-    }*/
+    }
 
     public void SimulationPhase()
     {
