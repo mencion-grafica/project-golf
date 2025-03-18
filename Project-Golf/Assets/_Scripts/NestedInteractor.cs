@@ -7,9 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class NestedInteractor : MonoBehaviour
 {
-    private XRGrabInteractable xrGrabInteractable;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable xrGrabInteractable;
 
-    private XRDirectInteractor xrDirectInteractor;
+    private UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor xrDirectInteractor;
 
     private ActionBasedController nestedXrController;
 
@@ -22,8 +22,8 @@ public class NestedInteractor : MonoBehaviour
 
     private void Awake()
     {
-        xrGrabInteractable = GetComponent<XRGrabInteractable>();
-        xrDirectInteractor = GetComponentInChildren<XRDirectInteractor>();
+        xrGrabInteractable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        xrDirectInteractor = GetComponentInChildren<UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor>();
         nestedXrController = GetComponentInChildren<ActionBasedController>();
         defaultInputActionProperty = nestedXrController.activateAction;
     }
@@ -45,6 +45,7 @@ public class NestedInteractor : MonoBehaviour
         nestedXrController.selectAction = defaultInputActionProperty;
     }
 
+    [Obsolete("Obsolete")]
     private void InjectControllerAction(SelectEnterEventArgs arg0)
     {
 
