@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 [ExecuteInEditMode]
 public class Planet : MonoBehaviour
@@ -13,7 +12,7 @@ public class Planet : MonoBehaviour
     
     private Transform _center;
     private Rigidbody _rigidbody;
-    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable _grabInteractable;
+    private XRGrabInteractable _grabInteractable;
     private Collider collider;
     
     private void Start()
@@ -21,14 +20,14 @@ public class Planet : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _center = transform;
         _rigidbody.mass = mass;
-        _grabInteractable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        _grabInteractable = GetComponent<XRGrabInteractable>();
         //_grabInteractable.useDynamicAttach = false;
         collider = GetComponent<Collider>();
     }
 
     public void IsDynamicAttach()
     {
-        UnityEngine.XR.Interaction.Toolkit.Interactors.IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
+        IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
         if (interactor.interactionLayers == InteractionLayerMask.GetMask("PlanetSocket"))
         {
             _grabInteractable.attachTransform = null;

@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlanetSocket : MonoBehaviour
 {
-    private UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor interactor;
+    private XRSocketInteractor interactor;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactor = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRSocketInteractor>();
+        interactor = GetComponent<XRSocketInteractor>();
     }
 
     public void TeleportToCenter()
