@@ -12,7 +12,7 @@ public class LocomotionManager : MonoBehaviour
 
     [SerializeField] private InputActionReference toggleTeleportAction;
     
-    [SerializeField] private UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor teleportRayInteractor;
+    [SerializeField] private XRRayInteractor teleportRayInteractor;
 
     // Start is called before the first frame update
     void Start()

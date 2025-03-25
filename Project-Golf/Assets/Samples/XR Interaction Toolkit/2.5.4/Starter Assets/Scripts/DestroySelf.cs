@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace XR.Interaction.Toolkit.Samples
+namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 {
     /// <summary>
     /// Destroys the GameObject it is attached to after a specified amount of time.
@@ -19,7 +17,7 @@ namespace XR.Interaction.Toolkit.Samples
             get => m_Lifetime;
             set => m_Lifetime = value;
         }
-
+    
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
         /// </summary>
