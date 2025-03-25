@@ -83,4 +83,9 @@ public class SimulationManager : MonoBehaviour
     {
         _celestialBodies.Add(obj.GetComponent<CelestialBody>());
     }
+
+    public void RemoveCelestialBody(GameObject obj)
+    {
+        _celestialBodies.Remove(obj.GetComponent<CelestialBody>());
+    }
 }
