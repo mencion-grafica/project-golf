@@ -2,10 +2,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
+using UnityEngine.Serialization;
 
 public class WormHole : Planet
 {
-    [SerializeField] private WormHole planet;
+    [SerializeField] private WormHole wormHole;
     [SerializeField] private int teleportOffset = 10;
     private Vector3 asteroidVelocity;
     private float asteroidVelocityFloat;
@@ -17,10 +18,30 @@ public class WormHole : Planet
     private Vector3 wormPosition;
     private Vector3 vectorDirectorRecta;
 
+    public WormHole GetWormHole()
+    {
+        return wormHole;
+    }
+    
+    public void SetWormHole(WormHole newWormHole)
+    {
+        this.wormHole = newWormHole;
+    }
+    
+    public int GetTeleportOffset()
+    {
+        return teleportOffset;
+    }
+    
+    public void SetTeleportOffset(int newTeleportOffset)
+    {
+        this.teleportOffset = newTeleportOffset;
+    }
+    
     private void OnCollisionEnter(Collision other)
     {
         Asteroid asteroid = other.gameObject.GetComponent<Asteroid>();
-        if (planet != null && planet != this)
+        if (wormHole != null && wormHole != this)
         {
             // Obtener el vector de movimiento del asteroide (su dirección normalizada)
             vectorDirectorRecta = asteroid.GetCurrentVelocity().normalized;
@@ -41,12 +62,12 @@ public class WormHole : Planet
             if(anguloGrados > 90 && anguloGrados <= 180)
             {
                 //Vector3 teleportPosition = planet.GetPosition() + 4 * planet.transform.up;
-                Vector3 teleportPosition = planet.GetPosition() + 1 * planet.transform.up;
+                Vector3 teleportPosition = wormHole.GetPosition() + 1 * wormHole.transform.up;
                 asteroidVelocity = asteroid.GetCurrentVelocity();
                 other.transform.position = teleportPosition;
                 asteroidVelocityFloat = asteroidVelocity.magnitude;
 
-                asteroid.SetCurrentVelocity(planet.transform.up * asteroidVelocityFloat);
+                asteroid.SetCurrentVelocity(wormHole.transform.up * asteroidVelocityFloat);
             }
             //Debug.Log("Ángulo entre el asteroide y forward del Wormhole: " + asteroid.GetCurrentVelocity() + "°" + anguloGrados);
 

@@ -50,7 +50,7 @@ public class SimulationManager : MonoBehaviour
         Time.fixedDeltaTime = physicsTimeStep;
         _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
         GetAllPlanets();
-        StartSimulation();
+        //StartSimulation();
     }
     
     public void StartSimulation()
