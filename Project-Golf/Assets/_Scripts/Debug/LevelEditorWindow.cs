@@ -13,6 +13,8 @@ public class LevelEditorWindow : EditorWindow
     private List<GameObject> _planets;
     private List<GameObject> _planetPoints;
     private List<GameObject> _obstacles;
+    private GameObject _targetPlanet;
+    private GameObject _asteroidSpawner;
     private List<bool> _planetFoldouts;
     private List<bool> _pointFoldouts;
     private List<bool> _obstacleFoldouts;
@@ -62,14 +64,14 @@ public class LevelEditorWindow : EditorWindow
         _planets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
         _obstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
         _planetPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
+        _targetPlanet = GameObject.FindGameObjectWithTag("TargetPlanet");
+        _asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner");
         _planetFoldouts = new List<bool>(_planets.Count);
         _pointFoldouts = new List<bool>(_planetPoints.Count);
         _obstacleFoldouts = new List<bool>(_obstacles.Count);
         for (int i = 0; i < _planets.Count; i++) _planetFoldouts.Add(OpenedFoldoutsFromStart);
         for (int i = 0; i < _planetPoints.Count; i++) _pointFoldouts.Add(OpenedFoldoutsFromStart);
         for (int i = 0; i < _obstacles.Count; i++) _obstacleFoldouts.Add(OpenedFoldoutsFromStart);
-        
-        GameObject asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner");
         
         _planets.Sort((a, b) => a.name.CompareTo(b.name));
         _obstacles.Sort((a, b) => a.name.CompareTo(b.name));
@@ -121,7 +123,110 @@ public class LevelEditorWindow : EditorWindow
                 });
             }
             
-            // TODO: Add obstacles
+            levelData.obstacles = new List<SOLevelData.ObstacleData>();
+            foreach (GameObject obstacle in _obstacles)
+            {
+                SOLevelData.ObstacleType type = GetObstacleType(obstacle);
+                if (type == SOLevelData.ObstacleType.Satellite)
+                {
+                    Satellite satellite = obstacle.GetComponent<Satellite>();
+                    levelData.obstacles.Add(new SOLevelData.ObstacleData
+                    {
+                        name = obstacle.name,
+                        transform = new SOLevelData.TransformData
+                        {
+                            position = obstacle.transform.position,
+                            rotation = obstacle.transform.rotation,
+                            scale = obstacle.transform.localScale
+                        },
+                        type = type,
+                        satellite = new SOLevelData.SatelliteData
+                        {
+                            planet = satellite.GetPlanet().name
+                        }
+                    });
+                }
+                else if (type == SOLevelData.ObstacleType.AsteroidRing)
+                {
+                    AsteroidRing asteroidRing = obstacle.GetComponent<AsteroidRing>();
+                    levelData.obstacles.Add(new SOLevelData.ObstacleData
+                    {
+                        name = obstacle.name,
+                        transform = new SOLevelData.TransformData
+                        {
+                            position = obstacle.transform.position,
+                            rotation = obstacle.transform.rotation,
+                            scale = obstacle.transform.localScale
+                        },
+                        type = type,
+                        asteroidRing = new SOLevelData.AsteroidRingData
+                        {
+                            rotationalVelocity = asteroidRing.GetRotationalVelocity()
+                        }
+                    });
+                }
+                else if (type == SOLevelData.ObstacleType.BlackHole)
+                {
+                    Planet planet = obstacle.GetComponent<Planet>();
+                    levelData.obstacles.Add(new SOLevelData.ObstacleData
+                    {
+                        name = obstacle.name,
+                        transform = new SOLevelData.TransformData
+                        {
+                            position = obstacle.transform.position,
+                            rotation = obstacle.transform.rotation,
+                            scale = obstacle.transform.localScale
+                        },
+                        type = type,
+                        blackHole = new SOLevelData.BlackHoleData
+                        {
+                            mass = planet.GetMass()
+                        }
+                    });
+                }
+                else if (type == SOLevelData.ObstacleType.WormHole)
+                {
+                    WormHole wormHole = obstacle.GetComponent<WormHole>();
+                    levelData.obstacles.Add(new SOLevelData.ObstacleData
+                    {
+                        name = obstacle.name,
+                        transform = new SOLevelData.TransformData
+                        {
+                            position = obstacle.transform.position,
+                            rotation = obstacle.transform.rotation,
+                            scale = obstacle.transform.localScale
+                        },
+                        type = type,
+                        wormHole = new SOLevelData.WormHoleData
+                        {
+                            planet = wormHole.GetWormHole().name,
+                            teleportOffset = wormHole.GetTeleportOffset()
+                        }
+                    });
+                }
+            }
+            
+            levelData.asteroidSpawner = new SOLevelData.AsteroidSpawnerData
+            {
+                name = _asteroidSpawner.name,
+                transform = new SOLevelData.TransformData
+                {
+                    position = _asteroidSpawner.transform.position,
+                    rotation = _asteroidSpawner.transform.rotation,
+                    scale = _asteroidSpawner.transform.localScale
+                }
+            };
+            
+            levelData.targetPlanet = new SOLevelData.TargetPlanetData
+            {
+                name = _targetPlanet.name,
+                transform = new SOLevelData.TransformData
+                {
+                    position = _targetPlanet.transform.position,
+                    rotation = _targetPlanet.transform.rotation,
+                    scale = _targetPlanet.transform.localScale
+                }
+            };
             
             AssetDatabase.CreateAsset(levelData, SavingAssetPath + _levelName + ".asset");
             AssetDatabase.SaveAssets();
@@ -202,34 +307,124 @@ public class LevelEditorWindow : EditorWindow
         List<GameObject> previousPlanets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
         List<GameObject> previousObstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
         List<GameObject> previousPlanetPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
-        //foreach (GameObject planet in previousPlanets) DestroyImmediate(planet);
-        //foreach (GameObject obstacle in previousObstacles) DestroyImmediate(obstacle);
-        //foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
+        GameObject previousTargetPlanet = GameObject.FindGameObjectWithTag("TargetPlanet");
+        GameObject previousAsteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner");
+        foreach (GameObject planet in previousPlanets) DestroyImmediate(planet);
+        foreach (GameObject obstacle in previousObstacles) DestroyImmediate(obstacle);
+        foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
+        if (previousAsteroidSpawner) DestroyImmediate(previousAsteroidSpawner);
+        if (previousTargetPlanet) DestroyImmediate(previousTargetPlanet);
         
-        // TODO: Load new data
         foreach (SOLevelData.PlanetPointData pointData in levelData.planetPoints)
         {
-                
+            var point = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPoint.prefab"));
+            point.name = pointData.name;
+            point.transform.position = pointData.transform.position;
+            point.transform.rotation = pointData.transform.rotation;
+            point.transform.localScale = pointData.transform.scale;
+            point.gameObject.tag = "PlanetPoint";
+            _planetPoints.Add(point);
         }
         
         foreach (SOLevelData.PlanetData planetData in levelData.planets)
         {
-            
+            var planet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPrototype.prefab"));
+            planet.name = planetData.name;
+            planet.transform.position = planetData.transform.position;
+            planet.transform.rotation = planetData.transform.rotation;
+            planet.transform.localScale = planetData.transform.scale;
+            planet.GetComponent<Planet>().SetPlanetType(planetData.type);
+            planet.GetComponent<Planet>().SetMass(planetData.mass);
+            planet.gameObject.tag = "Planet";
+            _planets.Add(planet);
         }
         
         foreach (SOLevelData.ObstacleData obstacleData in levelData.obstacles)
         {
-            
+            SOLevelData.ObstacleType type = obstacleData.type;
+
+            if (type == SOLevelData.ObstacleType.Satellite)
+            {
+                var satellite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Satellite.prefab"));
+                satellite.name = obstacleData.name;
+                satellite.transform.position = obstacleData.transform.position;
+                satellite.transform.rotation = obstacleData.transform.rotation;
+                satellite.transform.localScale = obstacleData.transform.scale;
+                satellite.GetComponent<Satellite>().SetPlanet(_planets.Find(planet => planet.name == obstacleData.satellite.planet).GetComponent<Planet>());
+                satellite.gameObject.tag = "Obstacle";
+                _obstacles.Add(satellite);
+            }
+            else if (type == SOLevelData.ObstacleType.AsteroidRing)
+            {
+                var asteroidRing = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidRing.prefab"));
+                asteroidRing.name = obstacleData.name;
+                asteroidRing.transform.position = obstacleData.transform.position;
+                asteroidRing.transform.rotation = obstacleData.transform.rotation;
+                asteroidRing.transform.localScale = obstacleData.transform.scale;
+                asteroidRing.GetComponent<AsteroidRing>().SetRotationalVelocity(obstacleData.asteroidRing.rotationalVelocity);
+                asteroidRing.gameObject.tag = "Obstacle";
+                _obstacles.Add(asteroidRing);
+            }
+            else if (type == SOLevelData.ObstacleType.BlackHole)
+            {
+                var blackHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BlackHole.prefab"));
+                blackHole.name = obstacleData.name;
+                blackHole.transform.position = obstacleData.transform.position;
+                blackHole.transform.rotation = obstacleData.transform.rotation;
+                blackHole.transform.localScale = obstacleData.transform.scale;
+                blackHole.GetComponent<Planet>().SetPlanetType(SOLevelData.PlanetType.HighMass);
+                blackHole.GetComponent<Planet>().SetMass(obstacleData.blackHole.mass);
+                blackHole.gameObject.tag = "Obstacle";
+                _obstacles.Add(blackHole);
+            }
+            else if (type == SOLevelData.ObstacleType.WormHole)
+            {
+                var wormHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/WormHole.prefab"));
+                wormHole.name = obstacleData.name;
+                wormHole.transform.position = obstacleData.transform.position;
+                wormHole.transform.rotation = obstacleData.transform.rotation;
+                wormHole.transform.localScale = obstacleData.transform.scale;
+                wormHole.GetComponent<WormHole>().SetTeleportOffset(obstacleData.wormHole.teleportOffset);
+                wormHole.gameObject.tag = "Obstacle";
+                _obstacles.Add(wormHole);
+            }
         }
+
+        foreach (SOLevelData.ObstacleData obstacleData in levelData.obstacles)
+        {
+            SOLevelData.ObstacleType type = obstacleData.type;
+            if (type == SOLevelData.ObstacleType.WormHole)
+            {
+                WormHole wormHoleComponent = _obstacles.Find(obstacle => obstacle.name == obstacleData.name).GetComponent<WormHole>();
+                wormHoleComponent.SetWormHole(_obstacles.Find(obstacle => obstacle.name == obstacleData.wormHole.planet).GetComponent<WormHole>());
+            }
+        }
+        
+        _targetPlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/TargetPlanet.prefab"));
+        _targetPlanet.name = levelData.targetPlanet.name;
+        _targetPlanet.transform.position = levelData.targetPlanet.transform.position;
+        _targetPlanet.transform.rotation = levelData.targetPlanet.transform.rotation;
+        _targetPlanet.transform.localScale = levelData.targetPlanet.transform.scale;
+        _targetPlanet.gameObject.tag = "TargetPlanet";
+        
+        _asteroidSpawner = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidSpawner.prefab"));
+        _asteroidSpawner.name = levelData.asteroidSpawner.name;
+        _asteroidSpawner.transform.position = levelData.asteroidSpawner.transform.position;
+        _asteroidSpawner.transform.rotation = levelData.asteroidSpawner.transform.rotation;
+        _asteroidSpawner.transform.localScale = levelData.asteroidSpawner.transform.scale;
+        _asteroidSpawner.gameObject.tag = "AsteroidSpawner";
+        
+        _levelCreated = true;
+        GetLevelData();
         
         Notify("Level loaded!", 1.0f);
     }
 
-    private void Title(string title, bool center = true)
+    private void Title(string title, string tooltip = "", bool center = true)
     {
         if (center) GUILayout.BeginHorizontal();
         if (center) GUILayout.FlexibleSpace();
-        GUILayout.Label(title, EditorStyles.boldLabel);
+        GUILayout.Label(new GUIContent(title, tooltip), EditorStyles.boldLabel);
         if (center) GUILayout.FlexibleSpace();
         if (center) GUILayout.EndHorizontal();
     }
@@ -263,14 +458,14 @@ public class LevelEditorWindow : EditorWindow
         GUILayout.EndVertical();
     }
     
-    private void Label(string text)
+    private void Label(string text, string tooltip = "")
     {
-        GUILayout.Label(text);
+        GUILayout.Label(new GUIContent(text, tooltip));
     }
     
-    private void PrefixLabel(string text)
+    private void PrefixLabel(string text, string tooltip = "")
     {
-        EditorGUILayout.PrefixLabel(text);
+        EditorGUILayout.PrefixLabel(new GUIContent(text, tooltip));
     }
     
     private void Space(float space)
@@ -325,7 +520,7 @@ public class LevelEditorWindow : EditorWindow
             
             Space(_bigSpace);
             
-            string[] toolbarOptions = {"Obstacles", "Planets", "Points"};
+            string[] toolbarOptions = {"Obstacles", "Planets", "Points", "Asteroid Spawn", "Target"};
             List<string> toolbarOptionsList = new List<string>(toolbarOptions);
             _selectedToolbarIndex = GUILayout.Toolbar(_selectedToolbarIndex, toolbarOptions);
             Space(_bigSpace);
@@ -395,10 +590,57 @@ public class LevelEditorWindow : EditorWindow
                         Space(_smallSpace);
 
                         BeginHorizontal();
-                        Label("Obstacle Type");
+                        PrefixLabel("Obstacle Type", "This type is immutable.");
                         SOLevelData.ObstacleType type = GetObstacleType(obstacle);
                         EditorGUILayout.EnumPopup("", type);
                         EndHorizontal();
+                        
+                        Space(_smallSpace);
+                        
+                        if (type == SOLevelData.ObstacleType.Satellite)
+                        {
+                            Satellite satellite = obstacle.GetComponent<Satellite>();
+                            BeginHorizontal();
+                            PrefixLabel("Planet");
+                            satellite.SetPlanet((Planet) EditorGUILayout.ObjectField("", satellite.GetPlanet(), typeof(Planet), true));
+                            EndHorizontal();
+                        }
+                        else if (type == SOLevelData.ObstacleType.AsteroidRing)
+                        {
+                            AsteroidRing asteroidRing = obstacle.GetComponent<AsteroidRing>();
+                            BeginHorizontal();
+                            PrefixLabel("Rotational Velocity");
+                            asteroidRing.SetRotationalVelocity(EditorGUILayout.FloatField("", asteroidRing.GetRotationalVelocity()));
+                            EndHorizontal();
+                        }
+                        else if (type == SOLevelData.ObstacleType.BlackHole)
+                        {
+                            Planet planet = obstacle.GetComponent<Planet>();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Mass Type", "Black Holes should always have type HighMass.");
+                            planet.SetPlanetType((SOLevelData.PlanetType) EditorGUILayout.EnumPopup("", planet.GetPlanetType()));
+                            EndHorizontal();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Mass");
+                            planet.SetMass(EditorGUILayout.FloatField("", planet.GetMass()));
+                            EndHorizontal();
+                        }
+                        else if (type == SOLevelData.ObstacleType.WormHole)
+                        {
+                            WormHole wormHole = obstacle.GetComponent<WormHole>();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Worm Hole", "The worm hole to teleport to.");
+                            wormHole.SetWormHole((WormHole) EditorGUILayout.ObjectField("", wormHole.GetWormHole(), typeof(WormHole), true));
+                            EndHorizontal();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Teleport Offset");
+                            wormHole.SetTeleportOffset(EditorGUILayout.IntField("", wormHole.GetTeleportOffset()));
+                            EndHorizontal();
+                        }
                         
                         Space(_bigSpace);
                     }
@@ -430,6 +672,44 @@ public class LevelEditorWindow : EditorWindow
                         Space(_bigSpace);
                     }
                 }
+            }
+            else if (_selectedToolbarIndex == toolbarOptionsList.IndexOf("Target"))
+            {
+                Label(_targetPlanet.name);
+                Label("Transform");
+                BeginHorizontal();
+                PrefixLabel("Position");
+                _targetPlanet.transform.position = EditorGUILayout.Vector3Field("", _targetPlanet.transform.position);
+                EndHorizontal();
+
+                BeginHorizontal();
+                PrefixLabel("Rotation");
+                _targetPlanet.transform.eulerAngles = EditorGUILayout.Vector3Field("", _targetPlanet.transform.rotation.eulerAngles);
+                EndHorizontal();
+
+                BeginHorizontal();
+                PrefixLabel("Scale");
+                _targetPlanet.transform.localScale = EditorGUILayout.Vector3Field("", _targetPlanet.transform.localScale);
+                EndHorizontal();
+            }
+            else if (_selectedToolbarIndex == toolbarOptionsList.IndexOf("Asteroid Spawn"))
+            {
+                Label(_asteroidSpawner.name);
+                Label("Transform");
+                BeginHorizontal();
+                PrefixLabel("Position");
+                _asteroidSpawner.transform.position = EditorGUILayout.Vector3Field("", _asteroidSpawner.transform.position);
+                EndHorizontal();
+
+                BeginHorizontal();
+                PrefixLabel("Rotation");
+                _asteroidSpawner.transform.eulerAngles = EditorGUILayout.Vector3Field("", _asteroidSpawner.transform.rotation.eulerAngles);
+                EndHorizontal();
+
+                BeginHorizontal();
+                PrefixLabel("Scale");
+                _asteroidSpawner.transform.localScale = EditorGUILayout.Vector3Field("", _asteroidSpawner.transform.localScale);
+                EndHorizontal();
             }
             
             Space(_bigSpace);
