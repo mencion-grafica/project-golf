@@ -8,13 +8,12 @@ public class AsteroidRing : MonoBehaviour
     [FormerlySerializedAs("rotationVelocity")]
     [Tooltip("Valores inferiores a 1 haran que rote cada vez mas lento")]
     [SerializeField, Range(0, 50)]
-    private float rotationalVelocity = 1.0f;
-    float y; 
+    private float rotationVelocity = 1.0f;
 
     void Update()
     {
-        y += Time.deltaTime * rotationalVelocity;
-        transform.rotation = Quaternion.Euler(transform.rotation.x, y, transform.rotation.z);
+        Vector3 rotation = new Vector3 (0, rotationVelocity, 0);
+        transform.Rotate(rotation);
     }
     
     public float GetRotationalVelocity()
