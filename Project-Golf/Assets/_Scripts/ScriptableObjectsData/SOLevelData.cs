@@ -22,6 +22,12 @@ public class SOLevelData : ScriptableObject
     }
     
     [Serializable]
+    public struct AsteroidRingData
+    {
+        public float rotationalVelocity;
+    }
+    
+    [Serializable]
     public struct SatelliteData
     {
         public string planet;
@@ -71,7 +77,24 @@ public class SOLevelData : ScriptableObject
         public string name;
         public TransformData transform;
         public ObstacleType type;
-        
+        public SatelliteData satellite;
+        public BlackHoleData blackHole;
+        public WormHoleData wormHole;
+        public AsteroidRingData asteroidRing;
+    }
+    
+    [Serializable]
+    public struct TargetPlanetData
+    {
+        public string name;
+        public TransformData transform;
+    }
+    
+    [Serializable]
+    public struct AsteroidSpawnerData
+    {
+        public string name;
+        public TransformData transform;
     }
     
     [Header("Planets")]
@@ -82,4 +105,10 @@ public class SOLevelData : ScriptableObject
     
     [Header("Obstacles")]
     public List<ObstacleData> obstacles;
+    
+    [Header("Target Planet")]
+    public TargetPlanetData targetPlanet;
+    
+    [Header("Asteroid Spawner")]
+    public AsteroidSpawnerData asteroidSpawner;
 }
