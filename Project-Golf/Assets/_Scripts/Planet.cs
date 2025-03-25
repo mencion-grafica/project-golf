@@ -38,7 +38,13 @@ public class Planet : MonoBehaviour
             _grabInteractable.useDynamicAttach = true;
         }
     }
-    
+
+    public void SetIsActive(SelectEnterEventArgs arg0, bool isActive)
+    {
+        Debug.Log("Hola");
+    }
+
+
     public float GetRadius()
     {
         return transform.localScale.x * 0.5f;
