@@ -26,9 +26,16 @@ public class Planet : MonoBehaviour
         //_grabInteractable.useDynamicAttach = false;
         collider = GetComponent<Collider>();
         _isActive = false;
-        childCount = transform.childCount + 1;
+        childCount = GetChildCount() + 1;
     }
 
+    private int GetChildCount()
+    {
+        int count = 0;
+        foreach (Transform child in transform) count++;
+        return count;
+    }
+    
     public void IsDynamicAttach()
     {
         IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
@@ -51,15 +58,21 @@ public class Planet : MonoBehaviour
         return pointsPos;
     }
     
+    private string GetAttachName(string name)
+    {
+        int start = name.IndexOf("[");
+        int end = name.IndexOf("]");
+        return name.Substring(start + 1, end - start - 1);
+    }
+    
     public void SetActive(bool active)
     {
         _isActive = false;
         if (!active) return;
-        if (transform.childCount != childCount) return; 
-        Vector3 pos = transform.GetChild(childCount - 1).position;
-        List<Vector3> planetPoints = GetPlanetPoints();
-        if (planetPoints.Count == 0) return;
-        _isActive = planetPoints.Contains(pos);
+        string attachName = GetAttachName(transform.GetChild(childCount - 1).gameObject.name);
+        _isActive = attachName == "PlanetPoint";
+        Debug.Log(attachName);
+        Debug.Log("Planet Active: " + _isActive);
     }
     
     public bool IsActive()

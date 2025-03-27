@@ -31,7 +31,7 @@ public class SimulationManager : MonoBehaviour
     {
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
-        _planets = _planets.FindAll(planet => planet.IsActive());
+        _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
     
     public float GetGravitationalConstant()
@@ -87,5 +87,11 @@ public class SimulationManager : MonoBehaviour
     public void RemoveCelestialBody(GameObject obj)
     {
         _celestialBodies.Remove(obj.GetComponent<CelestialBody>());
+    }
+
+    public void ShootAsteroid()
+    {
+        Shoot obj = FindFirstObjectByType<Shoot>();
+        if (obj) obj.shoot();
     }
 }
