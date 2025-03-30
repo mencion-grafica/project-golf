@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
 
 [CustomEditor(typeof(SimulationManager))]
 public class SimulationManagerEditor : Editor
@@ -33,3 +34,4 @@ public class SimulationManagerEditor : Editor
         Button("Shoot Asteroid", _simulationManager.ShootAsteroid, "Shoots an asteroid");
     }
 }
+#endif
