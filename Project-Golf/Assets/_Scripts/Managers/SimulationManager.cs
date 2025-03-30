@@ -27,11 +27,11 @@ public class SimulationManager : MonoBehaviour
     [SerializeField] private bool isSimulationRunning = false;
 
     [ContextMenu("Get All Planets")]
-
     private void GetAllPlanets()
     {
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
+        _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
     
     public float GetGravitationalConstant()
@@ -50,11 +50,12 @@ public class SimulationManager : MonoBehaviour
         Time.fixedDeltaTime = physicsTimeStep;
         _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
         GetAllPlanets();
-        StartSimulation();
+        //StartSimulation();
     }
     
     public void StartSimulation()
     {
+        GetAllPlanets();
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
         onSimulationStart?.Invoke();
@@ -81,5 +82,16 @@ public class SimulationManager : MonoBehaviour
     public void AddCelestialBody(GameObject obj)
     {
         _celestialBodies.Add(obj.GetComponent<CelestialBody>());
+    }
+
+    public void RemoveCelestialBody(GameObject obj)
+    {
+        _celestialBodies.Remove(obj.GetComponent<CelestialBody>());
+    }
+
+    public void ShootAsteroid()
+    {
+        Shoot obj = FindFirstObjectByType<Shoot>();
+        if (obj) obj.shoot();
     }
 }

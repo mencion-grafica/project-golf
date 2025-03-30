@@ -47,6 +47,11 @@ public class Satellite : CelestialBody
         return planet;
     }
     
+    public void SetPlanet(Planet newPlanet)
+    {
+        planet = newPlanet;
+    }
+    
     public override void UpdateVelocity(float timeStep)
     {
         float sqrDistance = (planet.GetPosition() - _rigidbody.position).sqrMagnitude;
