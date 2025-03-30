@@ -5,16 +5,15 @@ using UnityEngine.Serialization;
 
 public class AsteroidRing : MonoBehaviour
 {
-    [FormerlySerializedAs("rotationVelocity")]
+    [FormerlySerializedAs("rotationalVelocity")]
     [Tooltip("Valores inferiores a 1 haran que rote cada vez mas lento")]
     [SerializeField, Range(0, 50)]
     private float rotationalVelocity = 1.0f;
-    float y; 
 
     void Update()
     {
-        y += Time.deltaTime * rotationalVelocity;
-        transform.rotation = Quaternion.Euler(transform.rotation.x, y, transform.rotation.z);
+        Vector3 rotation = new Vector3 (0, rotationalVelocity, 0);
+        transform.Rotate(rotation);
     }
     
     public float GetRotationalVelocity()
