@@ -10,12 +10,12 @@ public class CelestialBody : MonoBehaviour
     [SerializeField, Range(0.0f, 100.0f)] protected float mass = 1.0f;
     [SerializeField, Range(0.0f, 1000.0f)] protected float radius = 1.0f;
     [SerializeField, Range(0.0f, 1000.0f)] protected float surfaceGravity = 1.0f;
-    
+
     protected List<Planet> _planets;
     protected Rigidbody _rigidbody;
     protected Vector3 _velocity;
     protected LineRenderer _lineRenderer;
-    
+
     protected void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -29,8 +29,8 @@ public class CelestialBody : MonoBehaviour
         _planets = SimulationManager.Instance.GetPlanets();
     }
 
-    public virtual void StartSimulation(){}
-    public virtual void StopSimulation(){}
+    public virtual void StartSimulation() { }
+    public virtual void StopSimulation() { }
 
     public virtual void UpdateVelocity(float timeStep)
     {
@@ -43,12 +43,12 @@ public class CelestialBody : MonoBehaviour
         }
         UpdatePosition(timeStep);
     }
-    
+
     public void UpdateVelocity(Vector3 acceleration, float timeStep)
     {
         _velocity += acceleration * timeStep;
     }
-    
+
     public void UpdatePosition(float timeStep)
     {
         _rigidbody.MovePosition(_rigidbody.position + _velocity * timeStep);
@@ -60,13 +60,13 @@ public class CelestialBody : MonoBehaviour
     {
         return transform.localScale.x * 0.5f;
     }
-    
+
     public Vector3 GetPosition()
     {
         if (!_rigidbody) _rigidbody = GetComponent<Rigidbody>();
         return _rigidbody.position;
     }
-    
+
     public Vector3 GetVelocity()
     {
         return initialVelocity;
