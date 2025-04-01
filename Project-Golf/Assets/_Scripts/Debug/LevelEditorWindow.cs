@@ -315,9 +315,10 @@ public class LevelEditorWindow : EditorWindow
         if (previousAsteroidSpawner) DestroyImmediate(previousAsteroidSpawner);
         if (previousTargetPlanet) DestroyImmediate(previousTargetPlanet);
         
+        GameObject level = GameObject.FindWithTag("Level");
         foreach (SOLevelData.PlanetPointData pointData in levelData.planetPoints)
         {
-            var point = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPoint.prefab"));
+            var point = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPoint.prefab"), level.transform, true);
             point.name = pointData.name;
             point.transform.position = pointData.transform.position;
             point.transform.rotation = pointData.transform.rotation;
@@ -328,7 +329,7 @@ public class LevelEditorWindow : EditorWindow
         
         foreach (SOLevelData.PlanetData planetData in levelData.planets)
         {
-            var planet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPrototype.prefab"));
+            var planet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPrototype.prefab"), level.transform, true);
             planet.name = planetData.name;
             planet.transform.position = planetData.transform.position;
             planet.transform.rotation = planetData.transform.rotation;
@@ -345,7 +346,7 @@ public class LevelEditorWindow : EditorWindow
 
             if (type == SOLevelData.ObstacleType.Satellite)
             {
-                var satellite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Satellite.prefab"));
+                var satellite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Satellite.prefab"), level.transform, true);
                 satellite.name = obstacleData.name;
                 satellite.transform.position = obstacleData.transform.position;
                 satellite.transform.rotation = obstacleData.transform.rotation;
@@ -356,7 +357,7 @@ public class LevelEditorWindow : EditorWindow
             }
             else if (type == SOLevelData.ObstacleType.AsteroidRing)
             {
-                var asteroidRing = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidRing.prefab"));
+                var asteroidRing = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidRing.prefab"), level.transform, true);
                 asteroidRing.name = obstacleData.name;
                 asteroidRing.transform.position = obstacleData.transform.position;
                 asteroidRing.transform.rotation = obstacleData.transform.rotation;
@@ -367,7 +368,7 @@ public class LevelEditorWindow : EditorWindow
             }
             else if (type == SOLevelData.ObstacleType.BlackHole)
             {
-                var blackHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BlackHole.prefab"));
+                var blackHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BlackHole.prefab"), level.transform, true);
                 blackHole.name = obstacleData.name;
                 blackHole.transform.position = obstacleData.transform.position;
                 blackHole.transform.rotation = obstacleData.transform.rotation;
@@ -379,7 +380,7 @@ public class LevelEditorWindow : EditorWindow
             }
             else if (type == SOLevelData.ObstacleType.WormHole)
             {
-                var wormHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/WormHole.prefab"));
+                var wormHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/WormHole.prefab"), level.transform, true);
                 wormHole.name = obstacleData.name;
                 wormHole.transform.position = obstacleData.transform.position;
                 wormHole.transform.rotation = obstacleData.transform.rotation;
@@ -400,14 +401,14 @@ public class LevelEditorWindow : EditorWindow
             }
         }
         
-        _targetPlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/TargetPlanet.prefab"));
+        _targetPlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/TargetPlanet.prefab"), level.transform, true);
         _targetPlanet.name = levelData.targetPlanet.name;
         _targetPlanet.transform.position = levelData.targetPlanet.transform.position;
         _targetPlanet.transform.rotation = levelData.targetPlanet.transform.rotation;
         _targetPlanet.transform.localScale = levelData.targetPlanet.transform.scale;
         _targetPlanet.gameObject.tag = "TargetPlanet";
         
-        _asteroidSpawner = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidSpawner.prefab"));
+        _asteroidSpawner = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidSpawner.prefab"), level.transform, true);
         _asteroidSpawner.name = levelData.asteroidSpawner.name;
         _asteroidSpawner.transform.position = levelData.asteroidSpawner.transform.position;
         _asteroidSpawner.transform.rotation = levelData.asteroidSpawner.transform.rotation;

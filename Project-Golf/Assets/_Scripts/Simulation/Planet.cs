@@ -10,13 +10,13 @@ public class Planet : MonoBehaviour
     [SerializeField] private SOLevelData.PlanetType type;
     [SerializeField, Range(0.0f, 100000.0f)] private float mass = 1.0f;
     private bool _isActive = false;
-
+    
     private Transform _center;
     private Rigidbody _rigidbody;
     private XRGrabInteractable _grabInteractable;
     private Collider collider;
     private int childCount = 0;
-
+    
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -35,7 +35,7 @@ public class Planet : MonoBehaviour
         foreach (Transform child in transform) count++;
         return count;
     }
-
+    
     public void IsDynamicAttach()
     {
         IXRInteractor interactor = _grabInteractable.GetOldestInteractorSelecting();
@@ -57,14 +57,14 @@ public class Planet : MonoBehaviour
         foreach (GameObject planetPoint in planetPoints) pointsPos.Add(planetPoint.transform.position);
         return pointsPos;
     }
-
+    
     private string GetAttachName(string name)
     {
         int start = name.IndexOf("[");
         int end = name.IndexOf("]");
         return name.Substring(start + 1, end - start - 1);
     }
-
+    
     public void SetActive(bool active)
     {
         _isActive = false;
@@ -74,27 +74,27 @@ public class Planet : MonoBehaviour
         Debug.Log(attachName);
         Debug.Log("Planet Active: " + _isActive);
     }
-
+    
     public bool IsActive()
     {
         return _isActive;
     }
-
+    
     public float GetRadius()
     {
         return transform.localScale.x * 0.5f;
     }
-
+    
     public float GetMass()
     {
         return mass;
     }
-
+    
     public SOLevelData.PlanetType GetPlanetType()
     {
         return type;
     }
-
+    
     public void SetPlanetType(SOLevelData.PlanetType type)
     {
         this.type = type;
@@ -104,7 +104,7 @@ public class Planet : MonoBehaviour
     {
         this.mass = mass;
     }
-
+    
     public Vector3 GetPosition()
     {
         if (!_rigidbody) _rigidbody = GetComponent<Rigidbody>();

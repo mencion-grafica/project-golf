@@ -13,6 +13,7 @@ TagManager:
   - Asteroid
   - AsteroidSpawner
   - TargetPlanet
+  - Level
   layers:
   - Default
   - TransparentFX
