@@ -10,6 +10,9 @@ public enum AudioFX
 {
     Walk,
     Asteroid,
+    PickUpPlanet,
+    PutPlanet,
+    Explotion
 }
 
 public enum AudioSkills
