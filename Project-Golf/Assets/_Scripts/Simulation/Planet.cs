@@ -16,6 +16,7 @@ public class Planet : MonoBehaviour
     private XRGrabInteractable _grabInteractable;
     private Collider collider;
     private int childCount = 0;
+    [SerializeField] AudioSource fxAudioSource;
 
     private void Start()
     {
@@ -73,6 +74,16 @@ public class Planet : MonoBehaviour
         _isActive = attachName == "PlanetPoint";
         Debug.Log(attachName);
         Debug.Log("Planet Active: " + _isActive);
+    }
+
+    public void PlayPickUp()
+    {
+        SoundManager.Instance.PlayFx(AudioFX.PickUpPlanet, fxAudioSource);
+    }
+
+    public void PlayPutDown()
+    {
+        SoundManager.Instance.PlayFx(AudioFX.PutPlanet, fxAudioSource);
     }
 
     public bool IsActive()

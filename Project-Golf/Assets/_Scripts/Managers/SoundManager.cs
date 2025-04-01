@@ -65,6 +65,7 @@ public class SoundManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource ambienceAudioSource;
+    [SerializeField] private AudioSource fxAudioSource;
 
     [Header("Audio Mixer")]
     [SerializeField] private AudioMixer audioMixer;
