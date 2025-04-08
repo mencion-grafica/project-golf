@@ -7,24 +7,23 @@ public class ButtonManager : MonoBehaviour
     [SerializeField]
     private GameObject InteractionPanel;
     [SerializeField]
-    private GameObject ButtonPanel;
+    private GameObject OptionsPanel;
     public void Exit()
     {
         Application.Quit();
     }
 
-    public void ChangeToOptions()
+    public void ChangeToOptionsMenu()
     {
         InteractionPanel.SetActive(false);
-        ButtonPanel.SetActive(false);
-
+        OptionsPanel.SetActive(false);
     }
 
-    public void ChangeToMenu()
+    public void ChangeToStartMenu()
     {
         //TODO: Coger (con viudez) nivel del levelmanager
         //FileSystem.Save();
-        ButtonPanel.SetActive(false);
+        OptionsPanel.SetActive(false);
         InteractionPanel.SetActive(true);
     }
 }
