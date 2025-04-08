@@ -344,9 +344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286cab41f8ba3ec4582d4e43d63e4d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simulation: {fileID: 788268680}
-  maxPoint: {fileID: 770019262}
-  speed: 5
 --- !u!1001 &14054590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8130,9 +8127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286cab41f8ba3ec4582d4e43d63e4d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simulation: {fileID: 788268680}
-  maxPoint: {fileID: 770019262}
-  speed: 5
 --- !u!114 &1051434811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14234,7 +14228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 428906, guid: a5cd29a93d7ae2d488fa0376d0d08462, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.821
+      value: -33.821
       objectReference: {fileID: 0}
     - target: {fileID: 428906, guid: a5cd29a93d7ae2d488fa0376d0d08462, type: 3}
       propertyPath: m_LocalPosition.y
