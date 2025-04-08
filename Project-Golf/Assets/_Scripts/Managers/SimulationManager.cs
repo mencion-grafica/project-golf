@@ -22,6 +22,7 @@ public class SimulationManager : MonoBehaviour
     [Header("Simulation Objects")]
     private List<CelestialBody> _celestialBodies = new List<CelestialBody>();
     private List<Planet> _planets = new List<Planet>();
+    private List<Planet> _nonActivePlanets = new List<Planet>();
 
     [Header("Simulation State")]
     [SerializeField] private bool isSimulationRunning = false;
@@ -29,11 +30,19 @@ public class SimulationManager : MonoBehaviour
     [ContextMenu("Get All Planets")]
     private void GetAllPlanets()
     {
+        _nonActivePlanets = new List<Planet>(FindObjectsOfType<Planet>());
+        _nonActivePlanets = _nonActivePlanets.FindAll(planet => !planet.IsActive());
+
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
         _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
 
+    public List<Planet> GetNonActivePlanets()
+    {
+        GetAllPlanets();
+        return _nonActivePlanets;
+    }
     public float GetGravitationalConstant()
     {
         return gravity;
