@@ -28,7 +28,10 @@ public class SimulationManagerEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
+        
+        GUILayout.Space(15);
+        EditorGUILayout.HelpBox("Following buttons only work in play mode.", MessageType.Info);
+        GUILayout.Space(15);
         Button("Start Simulation", _simulationManager.StartSimulation, "Starts the simulation");
         Button("Stop Simulation", _simulationManager.StopSimulation, "Stops the simulation");
         Button("Shoot Asteroid", _simulationManager.ShootAsteroid, "Shoots an asteroid");

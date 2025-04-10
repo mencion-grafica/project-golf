@@ -92,6 +92,6 @@ public class SimulationManager : MonoBehaviour
     public void ShootAsteroid()
     {
         Shoot obj = GameObject.FindWithTag("AsteroidSpawner").GetComponent<Shoot>();
-        if (obj) obj.shoot();
+        if (obj) obj.ShootAsteroid();
     }
 }

@@ -71,8 +71,6 @@ public class Planet : MonoBehaviour
         if (!active) return;
         string attachName = GetAttachName(transform.GetChild(childCount - 1).gameObject.name);
         _isActive = attachName == "PlanetPoint";
-        Debug.Log(attachName);
-        Debug.Log("Planet Active: " + _isActive);
     }
     
     public bool IsActive()

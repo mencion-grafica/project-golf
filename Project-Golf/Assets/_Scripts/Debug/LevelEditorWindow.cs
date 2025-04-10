@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class LevelEditorWindow : EditorWindow
 {
@@ -303,7 +304,9 @@ public class LevelEditorWindow : EditorWindow
         _planets = new List<GameObject>();
         _obstacles = new List<GameObject>();
         _planetPoints = new List<GameObject>();
-        
+
+        GameObject activateButton = GameObject.FindWithTag("ActivateButton");
+            
         List<GameObject> previousPlanets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Planet"));
         List<GameObject> previousObstacles = new List<GameObject>(GameObject.FindGameObjectsWithTag("Obstacle"));
         List<GameObject> previousPlanetPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PlanetPoint"));
@@ -414,6 +417,14 @@ public class LevelEditorWindow : EditorWindow
         _asteroidSpawner.transform.rotation = levelData.asteroidSpawner.transform.rotation;
         _asteroidSpawner.transform.localScale = levelData.asteroidSpawner.transform.scale;
         _asteroidSpawner.gameObject.tag = "AsteroidSpawner";
+
+        if (activateButton)
+        {
+            activateButton.GetComponent<XRSimpleInteractable>().selectEntered.RemoveAllListeners();
+            Debug.Log("Removed all listeners from activate button");
+            activateButton.GetComponent<XRSimpleInteractable>().selectEntered.AddListener(_asteroidSpawner.GetComponent<Shoot>().ShootAsteroidFromButton);
+            Debug.Log("Added listener to activate button");
+        }
         
         _levelCreated = true;
         GetLevelData();
