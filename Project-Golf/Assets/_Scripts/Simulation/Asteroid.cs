@@ -19,7 +19,7 @@ public class Asteroid : CelestialBody
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("WormHole")) return;
+        if (other.gameObject.GetComponent<WormHole>()) return;
         SimulationManager.Instance.StopSimulation();
     }
 }

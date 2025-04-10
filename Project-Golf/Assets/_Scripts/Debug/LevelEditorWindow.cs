@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class LevelEditorWindow : EditorWindow
@@ -205,6 +206,26 @@ public class LevelEditorWindow : EditorWindow
                         }
                     });
                 }
+                else if (type == SOLevelData.ObstacleType.ObstaclePlanet)
+                {
+                    Planet planet = obstacle.GetComponent<Planet>();
+                    levelData.obstacles.Add(new SOLevelData.ObstacleData
+                    {
+                        name = obstacle.name,
+                        transform = new SOLevelData.TransformData
+                        {
+                            position = obstacle.transform.position,
+                            rotation = obstacle.transform.rotation,
+                            scale = obstacle.transform.localScale
+                        },
+                        type = type,
+                        obstaclePlanet = new SOLevelData.ObstaclePlanetData
+                        {
+                            planetType = planet.GetPlanetType(),
+                            mass = planet.GetMass()
+                        }
+                    });
+                }
             }
             
             levelData.asteroidSpawner = new SOLevelData.AsteroidSpawnerData
@@ -347,14 +368,26 @@ public class LevelEditorWindow : EditorWindow
         {
             SOLevelData.ObstacleType type = obstacleData.type;
 
-            if (type == SOLevelData.ObstacleType.Satellite)
+            if (type == SOLevelData.ObstacleType.ObstaclePlanet)
+            {
+                var obstaclePlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/ObstaclePlanet.prefab"), level.transform, true);
+                obstaclePlanet.name = obstacleData.name;
+                obstaclePlanet.transform.position = obstacleData.transform.position;
+                obstaclePlanet.transform.rotation = obstacleData.transform.rotation;
+                obstaclePlanet.transform.localScale = obstacleData.transform.scale;
+                obstaclePlanet.GetComponent<Planet>().SetPlanetType(obstacleData.obstaclePlanet.planetType);
+                obstaclePlanet.GetComponent<Planet>().SetMass(obstacleData.obstaclePlanet.mass);
+                obstaclePlanet.gameObject.tag = "Obstacle";
+                _obstacles.Add(obstaclePlanet);
+            }
+            else if (type == SOLevelData.ObstacleType.Satellite)
             {
                 var satellite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Satellite.prefab"), level.transform, true);
                 satellite.name = obstacleData.name;
                 satellite.transform.position = obstacleData.transform.position;
                 satellite.transform.rotation = obstacleData.transform.rotation;
                 satellite.transform.localScale = obstacleData.transform.scale;
-                satellite.GetComponent<Satellite>().SetPlanet(_planets.Find(planet => planet.name == obstacleData.satellite.planet).GetComponent<Planet>());
+                satellite.GetComponent<Satellite>().SetPlanet(_obstacles.Find(obstacle => obstacle.name == obstacleData.satellite.planet).GetComponent<Planet>());
                 satellite.gameObject.tag = "Obstacle";
                 _obstacles.Add(satellite);
             }
@@ -418,18 +451,39 @@ public class LevelEditorWindow : EditorWindow
         _asteroidSpawner.transform.localScale = levelData.asteroidSpawner.transform.scale;
         _asteroidSpawner.gameObject.tag = "AsteroidSpawner";
 
-        if (activateButton)
-        {
-            activateButton.GetComponent<XRSimpleInteractable>().selectEntered.RemoveAllListeners();
-            Debug.Log("Removed all listeners from activate button");
-            activateButton.GetComponent<XRSimpleInteractable>().selectEntered.AddListener(_asteroidSpawner.GetComponent<Shoot>().ShootAsteroidFromButton);
-            Debug.Log("Added listener to activate button");
-        }
+        if (activateButton) EditorApplication.delayCall += () => DelaySetUpButton(activateButton);
+        else Debug.LogError("Activate button not found!");
         
         _levelCreated = true;
         GetLevelData();
         
         Notify("Level loaded!", 1.0f);
+    }
+
+    void DelaySetUpButton(GameObject button)
+    {
+        XRSimpleInteractable simpleInteractable = button.GetComponent<XRSimpleInteractable>();
+        Shoot shoot = _asteroidSpawner.GetComponent<Shoot>();
+
+        if (simpleInteractable == null)
+        {
+            Debug.LogError("XRSimpleInteractable component not found on the button!");
+            return;
+        }
+        
+        if (shoot == null)
+        {
+            Debug.LogError("Shoot component not found on the asteroid spawner!");
+            return;
+        }
+
+        int count = simpleInteractable.selectEntered.GetPersistentEventCount();
+        for (int i = count - 1; i >= 0; i--) UnityEventTools.RemovePersistentListener(simpleInteractable.selectEntered, i);
+        UnityEventTools.AddPersistentListener(simpleInteractable.selectEntered, shoot.ShootAsteroidFromButton);
+        
+        EditorUtility.SetDirty(simpleInteractable);
+        
+        Debug.Log("Set up button to shoot asteroids!");
     }
 
     private void Title(string title, string tooltip = "", bool center = true)
@@ -505,7 +559,8 @@ public class LevelEditorWindow : EditorWindow
         if (obstacle.GetComponent<WormHole>()) return SOLevelData.ObstacleType.WormHole;
         if (obstacle.GetComponent<AsteroidRing>()) return SOLevelData.ObstacleType.AsteroidRing;
         if (obstacle.GetComponent<Satellite>()) return SOLevelData.ObstacleType.Satellite;
-        if (obstacle.GetComponent<Planet>()) return SOLevelData.ObstacleType.BlackHole;
+        if (obstacle.GetComponent<BlackHole>()) return SOLevelData.ObstacleType.BlackHole;
+        if (obstacle.GetComponent<Planet>()) return SOLevelData.ObstacleType.ObstaclePlanet;
         return SOLevelData.ObstacleType.Null;
     }
     
@@ -651,6 +706,20 @@ public class LevelEditorWindow : EditorWindow
                             BeginHorizontal();
                             PrefixLabel("Teleport Offset");
                             wormHole.SetTeleportOffset(EditorGUILayout.IntField("", wormHole.GetTeleportOffset()));
+                            EndHorizontal();
+                        }
+                        else if (type == SOLevelData.ObstacleType.ObstaclePlanet)
+                        {
+                            Planet planet = obstacle.GetComponent<Planet>();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Mass Type", "Obstacle Planet's mass type");
+                            planet.SetPlanetType((SOLevelData.PlanetType) EditorGUILayout.EnumPopup("", planet.GetPlanetType()));
+                            EndHorizontal();
+                            
+                            BeginHorizontal();
+                            PrefixLabel("Mass", "Obstacle Planet's mass");
+                            planet.SetMass(EditorGUILayout.FloatField("", planet.GetMass()));
                             EndHorizontal();
                         }
                         

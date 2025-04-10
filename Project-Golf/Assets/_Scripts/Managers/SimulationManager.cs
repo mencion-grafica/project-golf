@@ -55,6 +55,11 @@ public class SimulationManager : MonoBehaviour
     
     public void StartSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Start Simulation can only be called in play mode.");
+            return;
+        }
         GetAllPlanets();
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
@@ -63,6 +68,11 @@ public class SimulationManager : MonoBehaviour
     
     public void StopSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Stop Simulation can only be called in play mode.");
+            return;
+        }
         isSimulationRunning = false;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
         onSimulationStop?.Invoke();
@@ -91,6 +101,11 @@ public class SimulationManager : MonoBehaviour
 
     public void ShootAsteroid()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Shoot Asteroid can only be called in play mode.");
+            return;
+        }
         Shoot obj = GameObject.FindWithTag("AsteroidSpawner").GetComponent<Shoot>();
         if (obj) obj.ShootAsteroid();
     }

@@ -175,12 +175,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7310245237411366416}
-  - component: {fileID: 50624785170294984}
+  - component: {fileID: -5830265397440566743}
   - component: {fileID: 4556527921425437634}
   - component: {fileID: 7044111893535580438}
   m_Layer: 0
   m_Name: BlackHole
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -202,7 +202,7 @@ Transform:
   - {fileID: 5976093372306110141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &50624785170294984
+--- !u!114 &-5830265397440566743
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,9 +211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4639986104843415169}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63b16900cb735b54eb7f2ba7a06af8a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9494ef182ec9cb241aa3a7aa3759d8cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   mass: 10000
 --- !u!54 &4556527921425437634
 Rigidbody:

@@ -22,11 +22,11 @@ public class CelestialBody : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 1;
         _lineRenderer.SetPosition(0, _rigidbody.position);
-        mass = surfaceGravity * radius * radius / SimulationManager.Instance.GetGravitationalConstant();
+        mass = surfaceGravity * radius * radius / (SimulationManager.Gravity);
         //transform.localScale = Vector3.one * radius;
         _rigidbody.mass = mass;
         _velocity = initialVelocity;
-        _planets = SimulationManager.Instance.GetPlanets();
+        _planets = Application.isPlaying ? SimulationManager.Instance.GetPlanets() : new List<Planet>(FindObjectsOfType<Planet>());
     }
 
     public virtual void StartSimulation() { }
