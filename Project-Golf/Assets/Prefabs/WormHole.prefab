@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1395931580470051266}
   m_Layer: 0
   m_Name: WormHole
-  m_TagString: WormHole
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c3f6c9d0428854f9e57d5f0f3ef98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   mass: 1
-  planet: {fileID: 0}
+  wormHole: {fileID: 0}
   teleportOffset: 1
 --- !u!64 &7137014685085262437
 MeshCollider:

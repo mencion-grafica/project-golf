@@ -1,0 +1,203 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da9152642d64114db7b62287d1570d9, type: 3}
+  m_Name: ObstaclePlanetExample
+  m_EditorClassIdentifier: 
+  planets:
+  - name: PlanetPrototype
+    transform:
+      position: {x: 0, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 0
+    mass: 3500
+  - name: PlanetPrototype_01
+    transform:
+      position: {x: 3, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 1
+    mass: 6000
+  - name: PlanetPrototype_02
+    transform:
+      position: {x: 6, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 2
+    mass: 7000
+  - name: PlanetPrototype_03
+    transform:
+      position: {x: 9, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 2
+    mass: 7000
+  - name: PlanetPrototype_04
+    transform:
+      position: {x: 12, y: 1, z: 5}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 2
+    mass: 7000
+  planetPoints:
+  - name: PlanetPoint
+    transform:
+      position: {x: 8.56, y: 6.2, z: -19.4}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_01
+    transform:
+      position: {x: -1.68, y: 6.84, z: 12.9}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_02
+    transform:
+      position: {x: -11.77, y: 4.85, z: 12.9}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_03
+    transform:
+      position: {x: 10.94, y: 4.85, z: 21.54}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  - name: PlanetPoint_04
+    transform:
+      position: {x: 13.76, y: 11.08, z: -11.36}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+  obstacles:
+  - name: AsteroidRing
+    transform:
+      position: {x: 2.76, y: 3.62, z: -20.73}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    type: 0
+    satellite:
+      planet: 
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 0
+    wormHole:
+      planet: 
+      teleportOffset: 0
+    asteroidRing:
+      rotationalVelocity: 5
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
+  - name: BlackHole
+    transform:
+      position: {x: 8.24, y: 13.009999, z: 6.06}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    type: 1
+    satellite:
+      planet: 
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 10000
+    wormHole:
+      planet: 
+      teleportOffset: 0
+    asteroidRing:
+      rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
+  - name: ObstaclePlanet
+    transform:
+      position: {x: -6.520254, y: 3.97, z: -6.0108843}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 2, y: 2, z: 2}
+    type: 4
+    satellite:
+      planet: 
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 0
+    wormHole:
+      planet: 
+      teleportOffset: 0
+    asteroidRing:
+      rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 3500
+  - name: Satellite
+    transform:
+      position: {x: -7.8757854, y: 4.046, z: -8.195}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.25, y: 0.25, z: 0.25}
+    type: 3
+    satellite:
+      planet: ObstaclePlanet
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 0
+    wormHole:
+      planet: 
+      teleportOffset: 0
+    asteroidRing:
+      rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
+  - name: WormHole
+    transform:
+      position: {x: 2.29, y: 0.501, z: -19.4}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.1, y: 0.01, z: 0.1}
+    type: 2
+    satellite:
+      planet: 
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 0
+    wormHole:
+      planet: WormHole_01
+      teleportOffset: 1
+    asteroidRing:
+      rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
+  - name: WormHole_01
+    transform:
+      position: {x: 21.293293, y: 10.309999, z: 12.9}
+      rotation: {x: 0.6123725, y: -0.35355353, z: 0.6123721, w: 0.35355374}
+      scale: {x: 0.1, y: 0.01, z: 0.1}
+    type: 2
+    satellite:
+      planet: 
+      initialVelocity: {x: 0, y: 0, z: 0}
+    blackHole:
+      mass: 0
+    wormHole:
+      planet: WormHole
+      teleportOffset: 1
+    asteroidRing:
+      rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
+  targetPlanet:
+    name: Final
+    transform:
+      position: {x: -17.38, y: 0.501, z: 17.38165}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+  asteroidSpawner:
+    name: AsteroidSpawner
+    transform:
+      position: {x: 18, y: 11, z: -19.4}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}

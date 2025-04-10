@@ -22,7 +22,7 @@ public class SimulationManager : MonoBehaviour
     [Header("Simulation Objects")]
     private List<CelestialBody> _celestialBodies = new List<CelestialBody>();
     private List<Planet> _planets = new List<Planet>();
-
+    
     [Header("Simulation State")]
     [SerializeField] private bool isSimulationRunning = false;
 
@@ -33,12 +33,12 @@ public class SimulationManager : MonoBehaviour
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
         _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
-
+    
     public float GetGravitationalConstant()
     {
         return gravity;
     }
-
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -52,17 +52,27 @@ public class SimulationManager : MonoBehaviour
         GetAllPlanets();
         //StartSimulation();
     }
-
+    
     public void StartSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Start Simulation can only be called in play mode.");
+            return;
+        }
         GetAllPlanets();
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
         onSimulationStart?.Invoke();
     }
-
+    
     public void StopSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Stop Simulation can only be called in play mode.");
+            return;
+        }
         isSimulationRunning = false;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
         onSimulationStop?.Invoke();
@@ -91,7 +101,12 @@ public class SimulationManager : MonoBehaviour
 
     public void ShootAsteroid()
     {
-        Shoot obj = FindFirstObjectByType<Shoot>();
-        if (obj) obj.shoot();
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Shoot Asteroid can only be called in play mode.");
+            return;
+        }
+        Shoot obj = GameObject.FindWithTag("AsteroidSpawner").GetComponent<Shoot>();
+        if (obj) obj.ShootAsteroid();
     }
 }

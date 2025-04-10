@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Shoot : MonoBehaviour
 {
     [SerializeField]
     private GameObject asteroid;
 
-    public void shoot()
+    public void ShootAsteroid()
     {
         var objs = GameObject.FindObjectsOfType<Asteroid>();
 
@@ -25,5 +26,10 @@ public class Shoot : MonoBehaviour
         var obj = Instantiate(asteroid, this.transform.position, Quaternion.identity);
         SimulationManager.Instance.AddCelestialBody(obj);
         SimulationManager.Instance.StartSimulation();
+    }
+
+    public void ShootAsteroidFromButton(SelectEnterEventArgs args)
+    {
+        ShootAsteroid();
     }
 }
