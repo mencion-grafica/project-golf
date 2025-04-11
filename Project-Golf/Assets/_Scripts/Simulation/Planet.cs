@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(AudioSource))]
 public class Planet : MonoBehaviour
 {
     [SerializeField] private SOLevelData.PlanetType type;
@@ -16,7 +17,7 @@ public class Planet : MonoBehaviour
     private XRGrabInteractable _grabInteractable;
     private Collider collider;
     private int childCount = 0;
-    [SerializeField] AudioSource fxAudioSource;
+    [SerializeField] private AudioSource fxAudioSource;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class Planet : MonoBehaviour
         collider = GetComponent<Collider>();
         _isActive = false;
         childCount = GetChildCount() + 1;
+        fxAudioSource = GetComponent<AudioSource>();
     }
 
     private int GetChildCount()
