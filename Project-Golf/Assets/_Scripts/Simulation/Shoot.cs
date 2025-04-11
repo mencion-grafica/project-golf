@@ -22,7 +22,6 @@ public class Shoot : MonoBehaviour
             Destroy(asteroid.gameObject);
         }
 
-
         var obj = Instantiate(asteroid, this.transform.position, Quaternion.identity);
         SimulationManager.Instance.AddCelestialBody(obj);
         SimulationManager.Instance.StartSimulation();

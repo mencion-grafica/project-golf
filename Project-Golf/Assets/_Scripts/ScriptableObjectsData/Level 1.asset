@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da9152642d64114db7b62287d1570d9, type: 3}
-  m_Name: ObstaclePlanetExample
+  m_Name: Level 1
   m_EditorClassIdentifier: 
   planets:
   - name: PlanetPrototype
@@ -94,9 +94,9 @@ MonoBehaviour:
     obstaclePlanet:
       planetType: 0
       mass: 0
-  - name: BlackHole
+  - name: BlackHole_01
     transform:
-      position: {x: 8.24, y: 13.009999, z: 6.06}
+      position: {x: -19.75, y: 3.89, z: 2.44}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     type: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
       planet: 
       initialVelocity: {x: 0, y: 0, z: 0}
     blackHole:
-      mass: 10000
+      mass: 12805
     wormHole:
       planet: 
       teleportOffset: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
       mass: 0
   - name: ObstaclePlanet
     transform:
-      position: {x: -6.520254, y: 3.97, z: -6.0108843}
+      position: {x: 15.44, y: 3.97, z: -12.75}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 2, y: 2, z: 2}
     type: 4
@@ -134,7 +134,7 @@ MonoBehaviour:
       mass: 3500
   - name: Satellite
     transform:
-      position: {x: -7.8757854, y: 4.046, z: -8.195}
+      position: {x: 14.084469, y: 4.046, z: -14.934115}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 0.25, y: 0.25, z: 0.25}
     type: 3
@@ -151,44 +151,6 @@ MonoBehaviour:
     obstaclePlanet:
       planetType: 0
       mass: 0
-  - name: WormHole
-    transform:
-      position: {x: 2.29, y: 0.501, z: -19.4}
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 0.1, y: 0.01, z: 0.1}
-    type: 2
-    satellite:
-      planet: 
-      initialVelocity: {x: 0, y: 0, z: 0}
-    blackHole:
-      mass: 0
-    wormHole:
-      planet: WormHole_01
-      teleportOffset: 1
-    asteroidRing:
-      rotationalVelocity: 0
-    obstaclePlanet:
-      planetType: 0
-      mass: 0
-  - name: WormHole_01
-    transform:
-      position: {x: 21.293293, y: 10.309999, z: 12.9}
-      rotation: {x: 0.6123725, y: -0.35355353, z: 0.6123721, w: 0.35355374}
-      scale: {x: 0.1, y: 0.01, z: 0.1}
-    type: 2
-    satellite:
-      planet: 
-      initialVelocity: {x: 0, y: 0, z: 0}
-    blackHole:
-      mass: 0
-    wormHole:
-      planet: WormHole
-      teleportOffset: 1
-    asteroidRing:
-      rotationalVelocity: 0
-    obstaclePlanet:
-      planetType: 0
-      mass: 0
   targetPlanet:
     name: Final
     transform:
@@ -198,6 +160,6 @@ MonoBehaviour:
   asteroidSpawner:
     name: AsteroidSpawner
     transform:
-      position: {x: 18, y: 11, z: -19.4}
+      position: {x: 18, y: 11, z: 18.34}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
