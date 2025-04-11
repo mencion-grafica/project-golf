@@ -255,6 +255,9 @@ public class LevelEditorWindow : EditorWindow
             AssetDatabase.Refresh();
             
             Selection.activeObject = levelData;
+
+            LevelManager levelManager = FindObjectOfType<LevelManager>();
+            if (levelManager) levelManager.GetLevels();
         }
         catch (Exception e)
         {

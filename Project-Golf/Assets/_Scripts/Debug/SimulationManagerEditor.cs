@@ -12,7 +12,7 @@ public class SimulationManagerEditor : Editor
 
     private void OnEnable()
     {
-        _simulationManager = (SimulationManager)target;
+        _simulationManager = (SimulationManager) target;
     }
 
     private void Button(string text, Action function, string tooltip = "", bool center = false)
@@ -30,7 +30,7 @@ public class SimulationManagerEditor : Editor
         base.OnInspectorGUI();
         
         GUILayout.Space(15);
-        EditorGUILayout.HelpBox("Following buttons only work in play mode.", MessageType.Info);
+        EditorGUILayout.HelpBox("Following buttons only work in play mode.", MessageType.Warning);
         GUILayout.Space(15);
         Button("Start Simulation", _simulationManager.StartSimulation, "Starts the simulation");
         Button("Stop Simulation", _simulationManager.StopSimulation, "Stops the simulation");

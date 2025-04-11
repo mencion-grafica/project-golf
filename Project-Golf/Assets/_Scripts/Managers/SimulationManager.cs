@@ -45,11 +45,16 @@ public class SimulationManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    public void SetUpSimulation()
+    {
+        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
+        GetAllPlanets();
+    }
+
     private void Start()
     {
         Time.fixedDeltaTime = physicsTimeStep;
-        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
-        GetAllPlanets();
+        SetUpSimulation();
         //StartSimulation();
     }
     
