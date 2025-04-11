@@ -18,6 +18,7 @@ public class SOLevelData : ScriptableObject
         BlackHole,
         WormHole,
         Satellite,
+        ObstaclePlanet,
         Null
     }
     
@@ -45,6 +46,13 @@ public class SOLevelData : ScriptableObject
     {
         public string planet;
         public int teleportOffset;
+    }
+
+    [Serializable]
+    public struct ObstaclePlanetData
+    {
+        public PlanetType planetType;
+        public float mass;
     }
     
     [Serializable]
@@ -81,6 +89,7 @@ public class SOLevelData : ScriptableObject
         public BlackHoleData blackHole;
         public WormHoleData wormHole;
         public AsteroidRingData asteroidRing;
+        public ObstaclePlanetData obstaclePlanet;
     }
     
     [Serializable]

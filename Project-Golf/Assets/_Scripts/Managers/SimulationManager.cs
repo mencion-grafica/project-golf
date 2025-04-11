@@ -47,31 +47,46 @@ public class SimulationManager : MonoBehaviour
     {
         return gravity;
     }
-
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
+    public void SetUpSimulation()
+    {
+        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
+        GetAllPlanets();
+    }
+
     private void Start()
     {
         Time.fixedDeltaTime = physicsTimeStep;
-        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
-        GetAllPlanets();
+        SetUpSimulation();
         //StartSimulation();
     }
-
+    
     public void StartSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Start Simulation can only be called in play mode.");
+            return;
+        }
         GetAllPlanets();
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
         onSimulationStart?.Invoke();
     }
-
+    
     public void StopSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Stop Simulation can only be called in play mode.");
+            return;
+        }
         isSimulationRunning = false;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
         onSimulationStop?.Invoke();
@@ -100,7 +115,12 @@ public class SimulationManager : MonoBehaviour
 
     public void ShootAsteroid()
     {
-        Shoot obj = FindFirstObjectByType<Shoot>();
-        if (obj) obj.shoot();
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Shoot Asteroid can only be called in play mode.");
+            return;
+        }
+        Shoot obj = GameObject.FindWithTag("AsteroidSpawner").GetComponent<Shoot>();
+        if (obj) obj.ShootAsteroid();
     }
 }
