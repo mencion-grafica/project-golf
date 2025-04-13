@@ -8,7 +8,7 @@ public static class FileSystem
     {
         PlayerPrefs.SetInt("Level", level);
     }
-    
+
     public static int Load()
     {
         int level = PlayerPrefs.GetInt("Level");

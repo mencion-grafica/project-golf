@@ -91,10 +91,13 @@ MonoBehaviour:
       teleportOffset: 0
     asteroidRing:
       rotationalVelocity: 5
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
   - name: BlackHole
     transform:
       position: {x: 8.24, y: 13.009999, z: 6.06}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     type: 1
     satellite:
@@ -107,6 +110,9 @@ MonoBehaviour:
       teleportOffset: 0
     asteroidRing:
       rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
   - name: WormHole
     transform:
       position: {x: 2.29, y: 0.501, z: -19.4}
@@ -123,6 +129,9 @@ MonoBehaviour:
       teleportOffset: 1
     asteroidRing:
       rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
   - name: WormHole_01
     transform:
       position: {x: 21.293293, y: 10.309999, z: 12.9}
@@ -139,6 +148,9 @@ MonoBehaviour:
       teleportOffset: 1
     asteroidRing:
       rotationalVelocity: 0
+    obstaclePlanet:
+      planetType: 0
+      mass: 0
   targetPlanet:
     name: Final
     transform:
@@ -149,5 +161,5 @@ MonoBehaviour:
     name: AsteroidSpawner
     transform:
       position: {x: 18, y: 11, z: -19.4}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
+      rotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
       scale: {x: 1, y: 1, z: 1}

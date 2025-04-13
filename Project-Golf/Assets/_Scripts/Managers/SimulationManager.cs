@@ -22,18 +22,27 @@ public class SimulationManager : MonoBehaviour
     [Header("Simulation Objects")]
     private List<CelestialBody> _celestialBodies = new List<CelestialBody>();
     private List<Planet> _planets = new List<Planet>();
-    
+    private List<Planet> _nonActivePlanets = new List<Planet>();
+
     [Header("Simulation State")]
     [SerializeField] private bool isSimulationRunning = false;
 
     [ContextMenu("Get All Planets")]
     private void GetAllPlanets()
     {
+        _nonActivePlanets = new List<Planet>(FindObjectsOfType<Planet>());
+        _nonActivePlanets = _nonActivePlanets.FindAll(planet => !planet.IsActive());
+
         _planets = new List<Planet>(FindObjectsOfType<Planet>());
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
         _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
-    
+
+    public List<Planet> GetNonActivePlanets()
+    {
+        GetAllPlanets();
+        return _nonActivePlanets;
+    }
     public float GetGravitationalConstant()
     {
         return gravity;
@@ -45,16 +54,26 @@ public class SimulationManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    public void SetUpSimulation()
+    {
+        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
+        GetAllPlanets();
+    }
+
     private void Start()
     {
         Time.fixedDeltaTime = physicsTimeStep;
-        _celestialBodies = new List<CelestialBody>(FindObjectsOfType<CelestialBody>());
-        GetAllPlanets();
+        SetUpSimulation();
         //StartSimulation();
     }
     
     public void StartSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Start Simulation can only be called in play mode.");
+            return;
+        }
         GetAllPlanets();
         isSimulationRunning = true;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StartSimulation();
@@ -63,6 +82,11 @@ public class SimulationManager : MonoBehaviour
     
     public void StopSimulation()
     {
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Stop Simulation can only be called in play mode.");
+            return;
+        }
         isSimulationRunning = false;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
         onSimulationStop?.Invoke();
@@ -91,7 +115,12 @@ public class SimulationManager : MonoBehaviour
 
     public void ShootAsteroid()
     {
-        Shoot obj = FindFirstObjectByType<Shoot>();
-        if (obj) obj.shoot();
+        if (!Application.isPlaying)
+        {
+            Debug.LogError("Shoot Asteroid can only be called in play mode.");
+            return;
+        }
+        Shoot obj = GameObject.FindWithTag("AsteroidSpawner").GetComponent<Shoot>();
+        if (obj) obj.ShootAsteroid();
     }
 }

@@ -13,8 +13,8 @@ TagManager:
   - Asteroid
   - AsteroidSpawner
   - TargetPlanet
-  - WormHole
   - Level
+  - ActivateButton
   layers:
   - Default
   - TransparentFX
