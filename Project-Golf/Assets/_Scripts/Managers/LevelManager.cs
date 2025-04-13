@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour
         GameObject level = GameObject.FindWithTag("Level");
         foreach (SOLevelData.PlanetPointData pointData in currentLevel.planetPoints)
         {
-            var point = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPoint.prefab"), level.transform, true);
+            var point = Instantiate(Resources.Load<GameObject>("PlanetPoint"), level.transform, true);
             point.name = pointData.name;
             point.transform.position = pointData.transform.position;
             point.transform.rotation = pointData.transform.rotation;
@@ -105,7 +105,7 @@ public class LevelManager : MonoBehaviour
         
         foreach (SOLevelData.PlanetData planetData in currentLevel.planets)
         {
-            var planet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/PlanetPrototype.prefab"), level.transform, true);
+            var planet = Instantiate(Resources.Load<GameObject>("PlanetPrototype"), level.transform, true);
             planet.name = planetData.name;
             planet.transform.position = planetData.transform.position;
             planet.transform.rotation = planetData.transform.rotation;
@@ -122,7 +122,7 @@ public class LevelManager : MonoBehaviour
 
             if (type == SOLevelData.ObstacleType.ObstaclePlanet)
             {
-                var obstaclePlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/ObstaclePlanet.prefab"), level.transform, true);
+                var obstaclePlanet = Instantiate(Resources.Load<GameObject>("ObstaclePlanet"), level.transform, true);
                 obstaclePlanet.name = obstacleData.name;
                 obstaclePlanet.transform.position = obstacleData.transform.position;
                 obstaclePlanet.transform.rotation = obstacleData.transform.rotation;
@@ -134,7 +134,7 @@ public class LevelManager : MonoBehaviour
             }
             else if (type == SOLevelData.ObstacleType.Satellite)
             {
-                var satellite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Satellite.prefab"), level.transform, true);
+                var satellite = Instantiate(Resources.Load<GameObject>("Satellite"), level.transform, true);
                 satellite.name = obstacleData.name;
                 satellite.transform.position = obstacleData.transform.position;
                 satellite.transform.rotation = obstacleData.transform.rotation;
@@ -145,7 +145,7 @@ public class LevelManager : MonoBehaviour
             }
             else if (type == SOLevelData.ObstacleType.AsteroidRing)
             {
-                var asteroidRing = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidRing.prefab"), level.transform, true);
+                var asteroidRing = Instantiate(Resources.Load<GameObject>("AsteroidRing"), level.transform, true);
                 asteroidRing.name = obstacleData.name;
                 asteroidRing.transform.position = obstacleData.transform.position;
                 asteroidRing.transform.rotation = obstacleData.transform.rotation;
@@ -156,7 +156,7 @@ public class LevelManager : MonoBehaviour
             }
             else if (type == SOLevelData.ObstacleType.BlackHole)
             {
-                var blackHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/BlackHole.prefab"), level.transform, true);
+                var blackHole = Instantiate(Resources.Load<GameObject>("BlackHole"), level.transform, true);
                 blackHole.name = obstacleData.name;
                 blackHole.transform.position = obstacleData.transform.position;
                 blackHole.transform.rotation = obstacleData.transform.rotation;
@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour
             }
             else if (type == SOLevelData.ObstacleType.WormHole)
             {
-                var wormHole = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/WormHole.prefab"), level.transform, true);
+                var wormHole = Instantiate(Resources.Load<GameObject>("WormHole"), level.transform, true);
                 wormHole.name = obstacleData.name;
                 wormHole.transform.position = obstacleData.transform.position;
                 wormHole.transform.rotation = obstacleData.transform.rotation;
@@ -189,14 +189,14 @@ public class LevelManager : MonoBehaviour
             }
         }
         
-        _targetPlanet = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/TargetPlanet.prefab"), level.transform, true);
+        _targetPlanet = Instantiate(Resources.Load<GameObject>("TargetPlanet"), level.transform, true);
         _targetPlanet.name = currentLevel.targetPlanet.name;
         _targetPlanet.transform.position = currentLevel.targetPlanet.transform.position;
         _targetPlanet.transform.rotation = currentLevel.targetPlanet.transform.rotation;
         _targetPlanet.transform.localScale = currentLevel.targetPlanet.transform.scale;
         _targetPlanet.gameObject.tag = "TargetPlanet";
         
-        _asteroidSpawner = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/AsteroidSpawner.prefab"), level.transform, true);
+        _asteroidSpawner = Instantiate(Resources.Load<GameObject>("AsteroidSpawner"), level.transform, true);
         _asteroidSpawner.name = currentLevel.asteroidSpawner.name;
         _asteroidSpawner.transform.position = currentLevel.asteroidSpawner.transform.position;
         _asteroidSpawner.transform.rotation = currentLevel.asteroidSpawner.transform.rotation;
