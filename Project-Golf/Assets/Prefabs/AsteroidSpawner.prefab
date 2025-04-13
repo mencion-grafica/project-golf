@@ -124,6 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8389850260196705153}
+  - component: {fileID: 239488316295932675}
   m_Layer: 0
   m_Name: AsteroidSpawner
   m_TagString: AsteroidSpawner
@@ -147,3 +148,16 @@ Transform:
   - {fileID: 3330114881566293577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &239488316295932675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945187440001539832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8311e55772d561a49b5ddc711e3afb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroid: {fileID: 58004084337994293, guid: 80c6dae8b43c44d469969a88d3dad1c2, type: 3}
