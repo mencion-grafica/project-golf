@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4021429831812557629}
   m_Layer: 0
   m_Name: PlanetPoint
-  m_TagString: Untagged
+  m_TagString: PlanetPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
