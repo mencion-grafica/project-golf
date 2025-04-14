@@ -12,7 +12,7 @@ public class AsteroidRing : MonoBehaviour
 
     void Update()
     {
-        Vector3 rotation = new Vector3 (0, rotationalVelocity, 0);
+        Vector3 rotation = new Vector3 (0, rotationalVelocity * Time.deltaTime, 0);
         transform.Rotate(rotation);
     }
     

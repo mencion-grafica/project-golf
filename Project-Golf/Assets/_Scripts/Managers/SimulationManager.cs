@@ -37,6 +37,11 @@ public class SimulationManager : MonoBehaviour
         _planets = _planets.FindAll(planet => planet.gameObject.activeInHierarchy);
         _planets = _planets.FindAll(planet => planet.IsActive() || !planet.CompareTag("Planet"));
     }
+    
+    public bool IsSimulationRunning()
+    {
+        return isSimulationRunning;
+    }
 
     public List<Planet> GetNonActivePlanets()
     {

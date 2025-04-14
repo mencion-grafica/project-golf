@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/AssetsExternos/HorrorPuzzleItems/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: a4b8e65c814467e4b87368e0e9242d5f
+  - enabled: 0
+    path: Assets/Scenes/Main (Old).unity
+    guid: fb03657958db3c74a91efc7ba0c503aa
   - enabled: 1
     path: Assets/Scenes/Main.unity
-    guid: fb03657958db3c74a91efc7ba0c503aa
+    guid: 3bc06b3291717514198ffde94e08d8ff
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 754421b80c7bab545adf920890a28e50,
       type: 2}

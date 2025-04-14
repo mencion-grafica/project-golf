@@ -76,7 +76,7 @@ MonoBehaviour:
       planet: 
       teleportOffset: 0
     asteroidRing:
-      rotationalVelocity: 0.25
+      rotationalVelocity: 20
     obstaclePlanet:
       planetType: 0
       mass: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
       planet: 
       teleportOffset: 0
     asteroidRing:
-      rotationalVelocity: 0.17
+      rotationalVelocity: 10
     obstaclePlanet:
       planetType: 0
       mass: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
       planet: 
       teleportOffset: 0
     asteroidRing:
-      rotationalVelocity: 0.065
+      rotationalVelocity: 8
     obstaclePlanet:
       planetType: 0
       mass: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
       planet: 
       teleportOffset: 0
     asteroidRing:
-      rotationalVelocity: 0.125
+      rotationalVelocity: 16
     obstaclePlanet:
       planetType: 0
       mass: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
       planet: 
       teleportOffset: 0
     asteroidRing:
-      rotationalVelocity: 0.15
+      rotationalVelocity: 5
     obstaclePlanet:
       planetType: 0
       mass: 0
