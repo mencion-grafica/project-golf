@@ -85,6 +85,9 @@ public class LevelManager : MonoBehaviour
         foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
         if (previousAsteroidSpawner) DestroyImmediate(previousAsteroidSpawner);
         if (previousTargetPlanet) DestroyImmediate(previousTargetPlanet);
+        
+        GameObject asteroid = GameObject.FindGameObjectWithTag("Asteroid");
+        if (asteroid) DestroyImmediate(asteroid);
     }
     
     public void LoadLevel()

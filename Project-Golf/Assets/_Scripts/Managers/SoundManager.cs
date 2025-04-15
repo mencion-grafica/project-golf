@@ -12,7 +12,8 @@ public enum AudioFX
     Asteroid,
     PickUpPlanet,
     PutPlanet,
-    Explotion
+    Explotion,
+    Confetti
 }
 
 public enum AudioSkills

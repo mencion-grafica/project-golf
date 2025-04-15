@@ -15,6 +15,7 @@ TagManager:
   - TargetPlanet
   - Level
   - ActivateButton
+  - Confetti
   layers:
   - Default
   - TransparentFX
