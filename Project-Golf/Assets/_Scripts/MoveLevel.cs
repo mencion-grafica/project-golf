@@ -34,27 +34,32 @@ public class MoveLevel : MonoBehaviour
 
     private void Update()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
+        
         if (isMoving)
         {
             simulation.transform.position = Vector3.MoveTowards(simulation.transform.position, maxPoint.position * direction, speed * Time.deltaTime);
-            //Debug.Log("Botón pulsado");
+            //Debug.Log("Botï¿½n pulsado");
         }
     }
 
     public void MoveLevelUp()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         isMoving = true;
         direction = 1;
     }
 
     public void MoveLevelDown()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         isMoving = true;
         direction = -1;
     }
 
     public void StopMoving()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         isMoving = false;
     }
 

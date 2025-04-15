@@ -16,6 +16,8 @@ TagManager:
   - Level
   - ActivateButton
   - Confetti
+  - CreditsRoom
+  - Alarm
   layers:
   - Default
   - TransparentFX
