@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour
     private GameObject _targetPlanet;
     private GameObject _asteroidSpawner;
     
+    private bool _isCinematicStarted = false;
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -30,6 +32,16 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _currentLevelIndex = 0;
+    }
+
+    public void SetIsCinematic(bool isCinematic)
+    {
+        _isCinematicStarted = isCinematic;
+    }
+    
+    public bool IsCinematicStarted()
+    {
+        return _isCinematicStarted;
     }
     
     public void PreviousLevel()
@@ -42,6 +54,11 @@ public class LevelManager : MonoBehaviour
     {
         _currentLevelIndex = Math.Clamp(_currentLevelIndex + 1, 0, levels.Count - 1);
         LoadLevel(levels[_currentLevelIndex]);
+    }
+    
+    public bool IsLastLevel()
+    {
+        return _currentLevelIndex == levels.Count - 1;
     }
     
     public SOLevelData GetCurrentLevel()
@@ -85,6 +102,9 @@ public class LevelManager : MonoBehaviour
         foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
         if (previousAsteroidSpawner) DestroyImmediate(previousAsteroidSpawner);
         if (previousTargetPlanet) DestroyImmediate(previousTargetPlanet);
+        
+        GameObject asteroid = GameObject.FindGameObjectWithTag("Asteroid");
+        if (asteroid) DestroyImmediate(asteroid);
     }
     
     public void LoadLevel()

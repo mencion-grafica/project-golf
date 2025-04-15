@@ -48,6 +48,7 @@ public class SimulationManager : MonoBehaviour
         GetAllPlanets();
         return _nonActivePlanets;
     }
+    
     public float GetGravitationalConstant()
     {
         return gravity;
@@ -74,6 +75,8 @@ public class SimulationManager : MonoBehaviour
     
     public void StartSimulation()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
+        
         if (!Application.isPlaying)
         {
             Debug.LogError("Start Simulation can only be called in play mode.");
@@ -87,6 +90,8 @@ public class SimulationManager : MonoBehaviour
     
     public void StopSimulation()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
+        
         if (!Application.isPlaying)
         {
             Debug.LogError("Stop Simulation can only be called in play mode.");
@@ -99,6 +104,7 @@ public class SimulationManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         if (!isSimulationRunning) return;
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.UpdateVelocity(physicsTimeStep);
     }
@@ -110,16 +116,19 @@ public class SimulationManager : MonoBehaviour
 
     public void AddCelestialBody(GameObject obj)
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         _celestialBodies.Add(obj.GetComponent<CelestialBody>());
     }
 
     public void RemoveCelestialBody(GameObject obj)
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         _celestialBodies.Remove(obj.GetComponent<CelestialBody>());
     }
 
     public void ShootAsteroid()
     {
+        if (LevelManager.Instance.IsCinematicStarted()) return;
         if (!Application.isPlaying)
         {
             Debug.LogError("Shoot Asteroid can only be called in play mode.");

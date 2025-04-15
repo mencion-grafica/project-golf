@@ -12,7 +12,9 @@ public enum AudioFX
     Asteroid,
     PickUpPlanet,
     PutPlanet,
-    Explotion
+    Explotion,
+    Confetti,
+    Alarm
 }
 
 public enum AudioSkills
@@ -32,7 +34,7 @@ public enum AudioUI
 
 public enum AudioMusic
 {
-    Piano
+    SadMusic
 }
 
 public enum AudioAmbience
@@ -52,7 +54,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private float clipTime;
     [SerializeField] private float timeBetweenClips;
     private bool isDone = false;
-    
     
     [Header("Audio Clips")]
     [SerializeField] private List<AudioClip> m_walkClips;
@@ -185,12 +186,43 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(m_fxClips[(int) audioFX]);
     }
+    
+    public void PlayFxLoop(AudioFX audioFX, AudioSource audioSource) 
+    {
+        audioSource.clip = m_fxClips[(int) audioFX];
+        audioSource.Play();
+        SetAudioSourceLoop(audioSource, true);
+    }
+
+    public void StopFx(AudioSource audioSource)
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
+        SetAudioSourceLoop(audioSource, false);
+    }
 
     public void PlayMusic(AudioMusic audioMusic, bool isLooping = true) 
     {
         musicAudioSource.clip = m_musicClips[(int) audioMusic];
         musicAudioSource.Play();
+        musicAudioSource.time = 220.0f;
         SetAudioSourceLoop(musicAudioSource, isLooping);
+        StartCoroutine(SmoothVolume(0.0f, 1.0f, 30.0f));
+    }
+    
+    private IEnumerator SmoothVolume(float startVolume, float targetVolume, float duration)
+    {
+        musicAudioSource.volume = startVolume;
+        
+        float time = 0;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            musicAudioSource.volume = Mathf.Lerp(startVolume, targetVolume, time / duration);
+            yield return null;
+        }
+        
+        musicAudioSource.volume = targetVolume;
     }
 
     public void PlayMusic(AudioMusic audioMusic, AudioSource audioSource, bool isLooping = true) 
