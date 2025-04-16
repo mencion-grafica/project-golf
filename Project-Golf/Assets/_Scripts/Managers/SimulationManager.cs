@@ -98,6 +98,7 @@ public class SimulationManager : MonoBehaviour
             return;
         }
         isSimulationRunning = false;
+        MoveLevel.Instance.AdoptNonActivePlanets();
         foreach (CelestialBody celestialBody in _celestialBodies) celestialBody.StopSimulation();
         onSimulationStop?.Invoke();
     }

@@ -7,11 +7,14 @@ public class StopButton : MonoBehaviour
     public void onClick()
     {
         if (SimulationManager.Instance.IsSimulationRunning())
+        {
+            //MoveLevel.Instance.AdoptNonActivePlanets();
             SimulationManager.Instance.StopSimulation();
+        }
         else
         {
-            SimulationManager.Instance.StartSimulation();
-            SimulationManager.Instance.ShootAsteroid();
+            MoveLevel.Instance.OrphanNonActivePlanets();
+            StartCoroutine(MoveLevel.Instance.MoveToSpawn());
         }
             
     }
