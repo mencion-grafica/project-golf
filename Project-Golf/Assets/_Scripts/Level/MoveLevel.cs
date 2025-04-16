@@ -6,6 +6,8 @@ using UnityEngine.Rendering;
 
 public class MoveLevel : MonoBehaviour
 {
+    public static MoveLevel Instance;
+
     [SerializeField]
     GameObject simulation;
     [SerializeField]
@@ -23,6 +25,9 @@ public class MoveLevel : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
         simulationInitialPosition = simulation.transform.position;
     }
 
@@ -30,6 +35,7 @@ public class MoveLevel : MonoBehaviour
     {
         currentNonActivePlanets = new List<Planet>();
         currentNonActivePlanets = SimulationManager.Instance.GetNonActivePlanets();
+        isSimulationStart = false;
     }
 
     private void Update()
@@ -63,9 +69,22 @@ public class MoveLevel : MonoBehaviour
         isMoving = false;
     }
 
-    public void ReturnToSpawn()
+    public IEnumerator MoveToSpawn()
     {
+        Debug.Log("Moviendome a posicion original");
 
+        while (transform.position != simulationInitialPosition)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, simulationInitialPosition, speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Debug.Log("Alcanzada posicion original, empezando simulacion");
+
+        SimulationManager.Instance.StartSimulation();
+        SimulationManager.Instance.ShootAsteroid();
+
+        yield return null;
     }
 
     public void OrphanNonActivePlanets()
@@ -87,9 +106,4 @@ public class MoveLevel : MonoBehaviour
             nonActive.transform.parent = simulation.transform;
         }
     }
-
-    /*private IEnumerator MoveToSpawn()
-    {
-
-    }*/
 }
