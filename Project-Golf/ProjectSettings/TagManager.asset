@@ -15,6 +15,9 @@ TagManager:
   - TargetPlanet
   - Level
   - ActivateButton
+  - Confetti
+  - CreditsRoom
+  - Alarm
   layers:
   - Default
   - TransparentFX
