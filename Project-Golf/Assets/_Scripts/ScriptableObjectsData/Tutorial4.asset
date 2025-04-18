@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1da9152642d64114db7b62287d1570d9, type: 3}
-  m_Name: Tutorial3
+  m_Name: Tutorial4
   m_EditorClassIdentifier: 
   planets:
   - name: PlanetPrototype
@@ -30,7 +30,7 @@ MonoBehaviour:
   targetPlanet:
     name: Final
     transform:
-      position: {x: 2.63, y: 3, z: 4.61}
+      position: {x: -8.39, y: 3, z: 4.61}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   asteroidSpawner:
