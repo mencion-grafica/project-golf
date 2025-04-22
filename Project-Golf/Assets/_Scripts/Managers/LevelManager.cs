@@ -54,6 +54,7 @@ public class LevelManager : MonoBehaviour
     {
         _currentLevelIndex = Math.Clamp(_currentLevelIndex + 1, 0, levels.Count - 1);
         LoadLevel(levels[_currentLevelIndex]);
+        
     }
     
     public bool IsLastLevel()
@@ -224,6 +225,7 @@ public class LevelManager : MonoBehaviour
         _asteroidSpawner.gameObject.tag = "AsteroidSpawner";
         
         SimulationManager.Instance.SetUpSimulation();
+        FileSystem.Save(_currentLevelIndex);
     }
     
     public void LoadLevel(SOLevelData level)
