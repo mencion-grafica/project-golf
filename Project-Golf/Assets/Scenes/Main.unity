@@ -8604,7 +8604,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -60520,15 +60520,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 11400000, guid: 4378da59d8ab6b646ae4c16948401e3f, type: 2}
-  - {fileID: 11400000, guid: a44c8a6eda802cb47b4d70841990504b, type: 2}
   - {fileID: 11400000, guid: ec18e2a331a543d48a535a89d9a7ecaf, type: 2}
   - {fileID: 11400000, guid: 099ab69830b73df44bffd72f2461c8f5, type: 2}
   - {fileID: 11400000, guid: 8f4cc6ea84bb119448ef94a01136d458, type: 2}
   - {fileID: 11400000, guid: 32254c16b56ed4f419632ff96fca0405, type: 2}
   - {fileID: 11400000, guid: d3bcbff17233fb542b340dc464642fae, type: 2}
   - {fileID: 11400000, guid: 2e7a3cba7d0c1804ebb1dd24ef19632c, type: 2}
-  currentLevel: {fileID: 11400000, guid: 4378da59d8ab6b646ae4c16948401e3f, type: 2}
+  - {fileID: 11400000, guid: a44c8a6eda802cb47b4d70841990504b, type: 2}
+  - {fileID: 11400000, guid: 4378da59d8ab6b646ae4c16948401e3f, type: 2}
+  currentLevel: {fileID: 11400000, guid: ec18e2a331a543d48a535a89d9a7ecaf, type: 2}
 --- !u!1001 &1890802814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74704,6 +74704,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 788268682}
@@ -74725,17 +74730,17 @@ PrefabInstance:
     - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AdoptNonActivePlanets
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
-        type: 3}
-      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StopMoving
       objectReference: {fileID: 0}
     - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: AdoptNonActivePlanets
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OrphanNonActivePlanets
+      value: MoveLevelUp
       objectReference: {fileID: 0}
     - target: {fileID: 4329647872919946856, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
@@ -74804,6 +74809,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 788268682}
@@ -74825,22 +74835,22 @@ PrefabInstance:
     - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AdoptNonActivePlanets
-      objectReference: {fileID: 0}
-    - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
-        type: 3}
-      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: StopMoving
       objectReference: {fileID: 0}
     - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: AdoptNonActivePlanets
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OrphanNonActivePlanets
+      value: MoveLevelDown
       objectReference: {fileID: 0}
     - target: {fileID: 9103390558815186986, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: MoveLevelDown
+      value: OrphanNonActivePlanets
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

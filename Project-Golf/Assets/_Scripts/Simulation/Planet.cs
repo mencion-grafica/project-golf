@@ -30,6 +30,7 @@ public class Planet : MonoBehaviour
         _isActive = false;
         childCount = GetChildCount() + 1;
         fxAudioSource = GetComponent<AudioSource>();
+        Debug.Log(gameObject.name + " " + _isActive);
     }
 
     private int GetChildCount()
@@ -63,17 +64,21 @@ public class Planet : MonoBehaviour
     
     private string GetAttachName(string name)
     {
-        int start = name.IndexOf("[");
-        int end = name.IndexOf("]");
-        return name.Substring(start + 1, end - start - 1);
+        if (name.Length < 12) return name;
+        return name.Substring(1, 11);
     }
     
     public void SetActive(bool active)
     {
         _isActive = false;
         if (!active) return;
-        string attachName = GetAttachName(transform.GetChild(childCount - 1).gameObject.name);
-        _isActive = attachName == "PlanetPoint";
+        foreach (Transform child in transform)
+        {
+            string attachName = GetAttachName(child.gameObject.name);
+            _isActive = attachName == "PlanetPoint";
+            if (_isActive) break;
+        }
+        Debug.Log("This planet is active: " + _isActive);
     }
     
     public void PlayPickUp()
