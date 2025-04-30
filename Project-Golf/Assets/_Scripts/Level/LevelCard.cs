@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LevelCard : MonoBehaviour
 {
-    [SerializeField] private SOLevelData levelData;
+    [SerializeField] private List<SOLevelData> levelData;
 
-    public SOLevelData GetLevelData()
+    public List<SOLevelData> GetLevelData()
     {
         return levelData;
     }
