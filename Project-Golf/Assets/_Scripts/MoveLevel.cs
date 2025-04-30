@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class MoveLevel : MonoBehaviour
 {
-    public static MoveLevel Instance;
+    public static MoveLevel Instance { get; private set; }
 
     [SerializeField]
     GameObject simulation;
