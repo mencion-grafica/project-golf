@@ -4,7 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    public void onClick() { 
+    [SerializeField] private TransitionAnimator SceneTransition;
+    public void onClick()
+    {
+        StartCoroutine(TransitionSceneChange());
+    }
+
+    public IEnumerator TransitionSceneChange()
+    {
+        SceneTransition.StartTransition();
+        yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene(1);
     }
 

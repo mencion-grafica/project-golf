@@ -16,7 +16,11 @@ public class OrbitDebugDisplay : MonoBehaviour
     [Tooltip("The celestial body to display the orbit of.")]
     [SerializeField] private CelestialBody body;
     private List<CelestialBody> _bodies;
-    
+
+    public void SetDisplay(bool isOn)
+    {
+        displayOrbits = isOn;
+    }
     private struct VirtualBody
     {
         public Vector3 position;

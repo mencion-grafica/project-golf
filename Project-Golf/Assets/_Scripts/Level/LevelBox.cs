@@ -10,6 +10,7 @@ public class LevelBox : MonoBehaviour
     private XRSocketInteractor ownInteractor;
 
     [SerializeField] private GameObject levelScreen;
+    [SerializeField] private List<LevelButton> levelButtons;
 
     public void OnCardInserted()
     {
@@ -17,9 +18,13 @@ public class LevelBox : MonoBehaviour
             .GetLevelData();
         foreach(SOLevelData data in levelData)
         {
-            GameObject levelButton = Instantiate(Resources.Load<GameObject>("LevelButton"), levelScreen.transform);
-            levelButton.GetComponent<LevelButton>().SetLevelData(data);
-            //levelButton.GetComponent<LevelButton>().SetLevelName(data.levelName);
+            LevelButton levelButton = Instantiate(Resources.Load<GameObject>("LevelButton"), levelScreen.transform).GetComponent<LevelButton>();
+            levelButton.SetLevelData(data);
+            levelButton.SetLevelState(
+                ownInteractor.GetOldestInteractableSelected().transform.GetComponent<LevelCard>().GetLevelComplete()[levelData.IndexOf(data)]);
+            
+            levelButton.SetLevelName(data.name);
+            levelButtons.Add(levelButton);
         }
     }
     
@@ -29,5 +34,26 @@ public class LevelBox : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        levelButtons.Clear();
+    }
+    
+    public LevelCard GetCard()
+    {
+        return ownInteractor.GetOldestInteractableSelected().transform.GetComponent<LevelCard>();
+    }
+    
+    public LevelButton GetLevelButtonFromLevelData(SOLevelData levelData)
+    {
+        foreach(LevelButton button in levelButtons)
+        {
+            if (button.GetLevelData() == levelData)
+                return button;
+        }
+        return null;
+    }
+
+    public void SetLevelDataOnButton(int level, LevelCompletionStage stage)
+    {
+        levelButtons[level].SetLevelState(stage);
     }
 }
