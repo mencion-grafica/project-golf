@@ -17,5 +17,9 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void agustinMeCagoEnTusMuertos()
+    {
+        SceneManager.LoadScene(1);
+    }
 
 }

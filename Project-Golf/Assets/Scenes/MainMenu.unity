@@ -183,7 +183,7 @@ PrefabInstance:
     - target: {fileID: 7272458935945891551, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
       propertyPath: m_Name
-      value: Player
+      value: 'Player '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a6673be78d94a4e9cf55c60b5604f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneTransition: {fileID: 0}
 --- !u!1 &192886956
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,7 +937,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee,
         type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: onClick
+      value: agustinMeCagoEnTusMuertos
       objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee,
         type: 3}
@@ -991,6 +992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a6673be78d94a4e9cf55c60b5604f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneTransition: {fileID: 0}
 --- !u!1 &838922478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1102,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1181990689}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1222,7 +1224,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1181990689}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1412,12 +1414,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074541959}
   m_CullTransparentMesh: 1
---- !u!20 &1181990689 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 963330544667005582, guid: 1ec786d5a07211a4a9393a8db015585b,
-    type: 3}
-  m_PrefabInstance: {fileID: 64493034}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1206250832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,6 +1896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a6673be78d94a4e9cf55c60b5604f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneTransition: {fileID: 0}
 --- !u!1 &1435241091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,6 +2550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a6673be78d94a4e9cf55c60b5604f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneTransition: {fileID: 0}
 --- !u!1 &1835037146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2855,7 +2853,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1181990689}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -3082,7 +3080,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 1181990689}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
