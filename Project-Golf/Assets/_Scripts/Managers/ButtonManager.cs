@@ -10,19 +10,19 @@ public class ButtonManager : MonoBehaviour
     private GameObject OptionsPanel;
     public void Exit()
     {
+        Debug.Log("Saliendo de la aplicacion");
         Application.Quit();
     }
 
     public void ChangeToOptionsMenu()
     {
         InteractionPanel.SetActive(false);
-        OptionsPanel.SetActive(false);
+        OptionsPanel.SetActive(true);
     }
 
     public void ChangeToStartMenu()
     {
-        //TODO: Coger (con viudez) nivel del levelmanager
-        //FileSystem.Save();
+        
         OptionsPanel.SetActive(false);
         InteractionPanel.SetActive(true);
     }
