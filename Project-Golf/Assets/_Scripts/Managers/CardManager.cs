@@ -1,7 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.XR.CoreUtils;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour

@@ -14,6 +14,11 @@ public class LevelBox : MonoBehaviour
 
     public void OnCardInserted()
     {
+        foreach (Transform child in levelScreen.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        levelButtons.Clear();
         List<SOLevelData> levelData = ownInteractor.GetOldestInteractableSelected().transform.GetComponent<LevelCard>()
             .GetLevelData();
         foreach(SOLevelData data in levelData)

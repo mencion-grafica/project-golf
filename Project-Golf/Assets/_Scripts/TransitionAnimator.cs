@@ -13,11 +13,11 @@ public class TransitionAnimator : MonoBehaviour
 
     public void PutOnGlasses()
     {
-        animator.SetTrigger("GogglesOn");
+        animator.SetBool("GogglesOn", true);
     }
     
     public void TakeOffGlasses()
     {
-        animator.SetTrigger("GogglesOff");
+        animator.SetBool("GogglesOn", false);
     }
 }
