@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class MoveLevel : MonoBehaviour
 {
-    public static MoveLevel Instance;
+    public static MoveLevel Instance { get; private set; }
 
     [SerializeField]
     GameObject simulation;
@@ -52,6 +52,8 @@ public class MoveLevel : MonoBehaviour
     public void MoveLevelUp()
     {
         if (LevelManager.Instance.IsCinematicStarted()) return;
+        currentNonActivePlanets = SimulationManager.Instance.GetNonActivePlanets();
+        OrphanNonActivePlanets();
         isMoving = true;
         direction = 1;
     }
@@ -59,6 +61,8 @@ public class MoveLevel : MonoBehaviour
     public void MoveLevelDown()
     {
         if (LevelManager.Instance.IsCinematicStarted()) return;
+        currentNonActivePlanets = SimulationManager.Instance.GetNonActivePlanets();
+        OrphanNonActivePlanets();
         isMoving = true;
         direction = -1;
     }
@@ -72,6 +76,7 @@ public class MoveLevel : MonoBehaviour
     public IEnumerator MoveToSpawn()
     {
         Debug.Log("Moviendome a posicion original");
+        currentNonActivePlanets = SimulationManager.Instance.GetNonActivePlanets();
 
         while (transform.position != simulationInitialPosition)
         {

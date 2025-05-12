@@ -5168,6 +5168,7 @@ MonoBehaviour:
   levels:
   - {fileID: 11400000, guid: 4378da59d8ab6b646ae4c16948401e3f, type: 2}
   currentLevel: {fileID: 11400000, guid: 4378da59d8ab6b646ae4c16948401e3f, type: 2}
+  _currentLevelIndex: 0
 --- !u!1 &418195513
 GameObject:
   m_ObjectHideFlags: 0

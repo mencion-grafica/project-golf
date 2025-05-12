@@ -52,6 +52,6 @@ public class TargetPlanet : MonoBehaviour
     private IEnumerator NextLevel()
     {
         yield return new WaitForSeconds(2.0f);
-        LevelManager.Instance.NextLevel();
+        LevelManager.Instance.CompleteLevel();
     }
 }
