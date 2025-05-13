@@ -181,6 +181,16 @@ PrefabInstance:
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2775142340615715765, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3568952548530655852, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5430565090696790331, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
       propertyPath: m_Radius
@@ -235,6 +245,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5784771437654683479, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5784771437654683479, guid: 1ec786d5a07211a4a9393a8db015585b,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6957074558483548223, guid: 1ec786d5a07211a4a9393a8db015585b,
         type: 3}
