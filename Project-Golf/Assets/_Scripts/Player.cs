@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
 
     public void SimulationPhase()
     {
+        Debug.Log("Simulation Phase");
         foreach(GameObject hand in hands)
         {
             hand.layer = 6;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
 
     public void PuzzlePhase()
     {
+        Debug.Log("Puzzle Phase");
         foreach (GameObject hand in hands)
         {
             hand.layer = 0;
