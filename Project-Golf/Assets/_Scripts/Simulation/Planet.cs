@@ -75,7 +75,7 @@ public class Planet : MonoBehaviour
         foreach (Transform child in transform)
         {
             string attachName = GetAttachName(child.gameObject.name);
-            _isActive = attachName == "PlanetPoint";
+            _isActive = string.Equals(attachName, "PlanetPoint", StringComparison.OrdinalIgnoreCase);
             if (_isActive) break;
         }
         Debug.Log("This planet is active: " + _isActive);
