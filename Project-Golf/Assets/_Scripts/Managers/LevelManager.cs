@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<SOLevelData> levels;
     [SerializeField] private SOLevelData currentLevel;
     
-    private int _currentLevelIndex;
+    [SerializeField]private int _currentLevelIndex;
 
     private List<GameObject> _planets;
     private List<GameObject> _obstacles;
@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
     
     private GameObject _targetPlanet;
     private GameObject _asteroidSpawner;
+    
+    private bool _isCinematicStarted = false;
     
     private void Awake()
     {
@@ -31,17 +33,39 @@ public class LevelManager : MonoBehaviour
     {
         _currentLevelIndex = 0;
     }
+
+    public void SetIsCinematic(bool isCinematic)
+    {
+        _isCinematicStarted = isCinematic;
+    }
+    
+    public bool IsCinematicStarted()
+    {
+        return _isCinematicStarted;
+    }
     
     public void PreviousLevel()
     {
         _currentLevelIndex = Mathf.Clamp(_currentLevelIndex - 1, 0, levels.Count - 1);
         LoadLevel(levels[_currentLevelIndex]);
     }
+
+    public void CompleteLevel()
+    {
+        CardManager.Instance.GetCurrentCard().SetLevelStage(levels[_currentLevelIndex], LevelCompletionStage.Complete);
+        NextLevel();
+    }
     
     public void NextLevel()
     {
         _currentLevelIndex = Math.Clamp(_currentLevelIndex + 1, 0, levels.Count - 1);
-        LoadLevel(levels[_currentLevelIndex]);
+        if(CardManager.Instance.GetCurrentCard().isLevelInCard(levels[_currentLevelIndex]))
+            LoadLevel(levels[_currentLevelIndex]);
+    }
+    
+    public bool IsLastLevel()
+    {
+        return _currentLevelIndex == levels.Count - 1;
     }
     
     public SOLevelData GetCurrentLevel()
@@ -85,6 +109,9 @@ public class LevelManager : MonoBehaviour
         foreach (GameObject point in previousPlanetPoints) DestroyImmediate(point);
         if (previousAsteroidSpawner) DestroyImmediate(previousAsteroidSpawner);
         if (previousTargetPlanet) DestroyImmediate(previousTargetPlanet);
+        
+        GameObject asteroid = GameObject.FindGameObjectWithTag("Asteroid");
+        if (asteroid) DestroyImmediate(asteroid);
     }
     
     public void LoadLevel()
@@ -204,6 +231,7 @@ public class LevelManager : MonoBehaviour
         _asteroidSpawner.gameObject.tag = "AsteroidSpawner";
         
         SimulationManager.Instance.SetUpSimulation();
+        FileSystem.Save(_currentLevelIndex);
     }
     
     public void LoadLevel(SOLevelData level)
@@ -216,5 +244,10 @@ public class LevelManager : MonoBehaviour
     {
         _currentLevelIndex = Math.Clamp(index, 0, levels.Count - 1);
         LoadLevel(levels[_currentLevelIndex]);
+    }
+    
+    public SOLevelData GetLevelData(int index)
+    {
+        return levels[Mathf.Clamp(index, 0, levels.Count - 1)];
     }
 }

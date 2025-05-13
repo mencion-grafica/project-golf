@@ -19,30 +19,18 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 2, y: 2, z: 2}
     type: 0
-    mass: 5000
-  - name: PlanetPrototype_01
-    transform:
-      position: {x: 3, y: 1, z: 5}
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 2, y: 2, z: 2}
-    type: 0
-    mass: 5000
+    mass: 6000
   planetPoints:
   - name: PlanetPoint_01
     transform:
-      position: {x: 7, y: 3, z: 7}
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 0.25, y: 0.25, z: 0.25}
-  - name: PlanetPoint_02
-    transform:
-      position: {x: 2.15, y: 8.08, z: 7}
+      position: {x: 5, y: 3, z: 5}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 0.25, y: 0.25, z: 0.25}
   obstacles: []
   targetPlanet:
     name: Final
     transform:
-      position: {x: 1.49, y: 10.76, z: 15.1}
+      position: {x: 2.63, y: 3, z: 4.61}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
   asteroidSpawner:
